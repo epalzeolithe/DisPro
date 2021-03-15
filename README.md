@@ -10,17 +10,29 @@ No installation required.
 Grab the latest binary for your platform from the [releases](https://github.com/SirSAC/GoDispatchProxy/releases) and start speeding up your internet connection.
 
 ## Usage
+For Windows use.
+```
+.\GoDispatchProxy.bin
+```
+For Darwin and Linux use.
+```
+./GoDispatchProxy.bin
+```
 For to show all commands type this.
 ```
 GoDispatchProxy.bin -help
 ```
-Or to show all networks type this.
+For to show all networks type this.
 ```
 GoDispatchProxy.bin -list
 ```
-For an example.
+The example 1.
 ```
-GoDispatchProxy.bin -host ::1 -port 1080 -size 4096 -try 2 -tunnel -delay -alive -serial 192.168.0.2@2 192.168.1.2
+GoDispatchProxy.bin -host ::1 -port 1080 -size 4096 -try 2 -delay -alive -serial 192.168.0.2@2 192.168.1.2
+```
+The example 2.
+```
+GoDispatchProxy.bin -host ::1 -port 1080 -size 4096 -try 2 -tunnel -delay -alive -serial 192.168.0.2:443@2 192.168.1.2:80
 ```
 
 ## Credits
