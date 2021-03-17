@@ -40,4 +40,4 @@ GoDispatchProxy.bin -host ::1 -port 1080 -size 4096 -try 2 -tunnel -delay -alive
 - [dispatch-proxy](https://github.com/alexkirsz/dispatch-proxy): A SOCKS5/HTTP proxy that balances traffic between multiple internet connections.
 
 ## License
-Licensed under MIT.
+Licensed under [MIT](https://github.com/SirSAC/GoDispatchProxy/blob/main/LICENSE).
