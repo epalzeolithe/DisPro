@@ -21,11 +21,11 @@ For [Darwin](https://en.wikipedia.org/wiki/MacOS) and [Linux](https://en.wikiped
 ```
 ./
 ```
-For to show all commands type this.
+For to show all commands, type this.
 ```
 GoDispatchProxy.bin -help
 ```
-For to show all networks type this.
+For to show all networks, type this.
 ```
 GoDispatchProxy.bin -list
 ```
