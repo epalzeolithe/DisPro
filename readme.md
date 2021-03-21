@@ -10,7 +10,7 @@ I needed something advanced, portable, stable and light, preferably a single bin
 
 ## Installation
 No installation required.
-Grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases) and rename it `DisPro.bin` then start speeding up your internet connection.
+Grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases/tag/v1.0.0) and rename it `DisPro.bin` then start speeding up your internet connection.
 
 ## Usage
 For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) use in front of binary name.
