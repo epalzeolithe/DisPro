@@ -21,13 +21,49 @@ For [Darwin](https://en.wikipedia.org/wiki/MacOS) and [Linux](https://en.wikiped
 ```
 ./
 ```
-For to show all commands, type this.
+### For to show all commands, type this.
 ```
 DisPro.bin -help
 ```
-For to show all networks, type this.
+Will show this.
+```
+Usage of C:\Windows\Temp\go-build23831943\b001\exe\main.exe:
+	-delay
+		Use delay mode (acts a combining a number of small outgoing messages and sending them all at once)
+	-host string
+		The IP address to listen for SOCKS connection (default "::1")
+	-keep
+		Use keep mode (sets whether the operating system should send keep-alive messages on the connection)
+	-list
+		Shows the available addresses for dispatching (non-tunneling mode only)
+	-multiply int
+		The threads are multiplied by the specific value (default 2)
+	-pipe int
+		The size of buffers in bytes for more power (default 8192)
+	-port int
+		The port number to listen for SOCKS connection (default 1080)
+	-secure
+		Use secure mode (acts like using secure ports than usual ones)
+	-serial
+		Use serial mode (acts to serialize access to function get load balancer)
+	-try int
+		The number of retries for SOCKS connection (default 0)
+	-tunnel
+		Use tunnel mode (acts as a transparent load balancing proxy)
+```
+### For to show all networks, type this.
 ```
 DisPro.bin -list
+```
+Will show like this.
+```
+2021/03/21 17:15:31 [-] Listing the available addresses for dispatching
+2021/03/21 17:15:31 [+] 1, IP: fe80::e464:1874:c2d3:ec5
+2021/03/21 17:15:31 [+] 1, IP: 192.168.1.2
+2021/03/21 17:15:31 [+] 2, IP: fe80::58c1:394f:7f9f:bc65
+2021/03/21 17:15:31 [+] 2, IP: 192.168.43.118
+2021/03/21 17:15:31 [+] 4, IP: fe80::5562:b18d:553f:c48d
+2021/03/21 17:15:31 [+] 4, IP: 169.254.196.141
 ```
 The example 1.
 ```
