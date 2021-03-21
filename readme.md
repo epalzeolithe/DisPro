@@ -1,4 +1,4 @@
-# GoDispatchProxy
+# DisPro
 A [SOCKS5](https://en.wikipedia.org/wiki/SOCKS) load balancing proxy to combine multiple internet connections into one.
 It can also be used as a transparent proxy to load balance multiple [SSH](https://en.wikipedia.org/wiki/SSH_(Secure_Shell)) tunnels.
 Written in pure [Go](https://en.wikipedia.org/wiki/Go_(programming_language)) with no additional dependencies.
@@ -10,7 +10,7 @@ I needed something advanced, portable, stable and light, preferably a single bin
 
 ## Installation
 No installation required.
-Grab the latest binary for your platform from the [releases](https://github.com/SirSAC/GoDispatchProxy/releases) and start speeding up your internet connection.
+Grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases) and start speeding up your internet connection.
 
 ## Usage
 For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) use in front of binary name.
@@ -43,4 +43,4 @@ GoDispatchProxy.bin -host ::1 -port 1080 -size 4096 -try 2 -tunnel -delay -alive
 - [dispatch-proxy](https://github.com/alexkirsz/dispatch-proxy): A [SOCKS5](https://en.wikipedia.org/wiki/SOCKS)/[HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) proxy that balances traffic between multiple internet connections.
 
 ## License
-Licensed under [MIT](https://github.com/SirSAC/GoDispatchProxy/blob/main/license).
+Licensed under [MIT](https://github.com/SirSAC/DisPro/blob/master/license).
