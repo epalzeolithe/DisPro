@@ -10,7 +10,7 @@ I needed something advanced, portable, stable and light, preferably a single bin
 
 ## Installation
 No installation required.
-Grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases) and start speeding up your internet connection.
+Grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases) and rename it `DisPro.bin` then start speeding up your internet connection.
 
 ## Usage
 For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) use in front of binary name.
@@ -23,19 +23,19 @@ For [Darwin](https://en.wikipedia.org/wiki/MacOS) and [Linux](https://en.wikiped
 ```
 For to show all commands, type this.
 ```
-GoDispatchProxy.bin -help
+DisPro.bin -help
 ```
 For to show all networks, type this.
 ```
-GoDispatchProxy.bin -list
+DisPro.bin -list
 ```
 The example 1.
 ```
-GoDispatchProxy.bin -host ::1 -port 1080 -size 4096 -try 2 -delay -alive -serial 192.168.0.2@2 192.168.1.2
+DisPro.bin -host ::1 -port 1080 -multiply 2 -pipe 8192 -try 2 -secure -delay -keep -serial 192.168.0.2@2 192.168.1.2
 ```
 The example 2.
 ```
-GoDispatchProxy.bin -host ::1 -port 1080 -size 4096 -try 2 -tunnel -delay -alive -serial 192.168.0.2:443@2 192.168.1.2:80
+DisPro.bin -host ::1 -port 1080 -multiply 2 -pipe 8192 -try 2 -tunnel -delay -keep -serial 192.168.0.2:443@2 192.168.1.2:80
 ```
 
 ## Credits
