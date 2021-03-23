@@ -16,8 +16,8 @@ DisPro now supports [Linux](https://en.wikipedia.org/wiki/Linux) in both modes, 
 On [Linux](https://en.wikipedia.org/wiki/Linux) normal mode, DisPro uses the `SOL_SOCKET` and `SO_BINDTODEVICE` from [`syscall`](https://golang.org/pkg/syscall/#BindToDevice) package to bind the interface corresponding to the load balancer IP addresses.
 As a result, the binary must be run with necessary capabilities and with root privilege.
 ```
-sudo setcap cap_net_raw="eip" "./DisPro.bin"
-sudo ifconfig lo mtu 1280 arp multicast up
+sudo setcap cap_net_admin,cap_net_raw="eip" "./DisPro.bin"
+sudo ifconfig lo add 127.0.0.1 netmask 255.255.255.255 mtu 1280 arp allmulti multicast dynamic up
 ```
 Tunnel mode doesn't require root privilege.
 
