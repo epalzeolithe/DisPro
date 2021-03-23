@@ -13,7 +13,7 @@ No installation required.
 Just grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases/tag/v1.0.0) and rename it `DisPro.bin` then start speeding up your internet connection.
 ### For to work on [Linux](https://en.wikipedia.org/wiki/Linux), follow these.
 DisPro now supports [Linux](https://en.wikipedia.org/wiki/Linux) in both modes, normal and tunnel.
-On [Linux](https://en.wikipedia.org/wiki/Linux) normal mode, DisPro uses the `SOL_SOCKET` and `SO_BINDTODEVICE` from [`syscall`](https://golang.org/pkg/syscall/#BindToDevice) package to bind the interface corresponding to the load balancer IP addresses.
+On [Linux](https://en.wikipedia.org/wiki/Linux) normal mode, DisPro uses the `SOL_SOCKET` and `SO_BINDTODEVICE` from [`syscall`](https://golang.org/pkg/syscall/#BindToDevice) package to bind the interface corresponding to the load balancer [IP](https://en.wikipedia.org/wiki/IP_address) addresses.
 As a result, the binary must be run with necessary capabilities and with root privilege.
 ```
 sudo setcap cap_net_admin,cap_net_raw="eip" "./DisPro.bin"
