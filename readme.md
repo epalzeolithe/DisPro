@@ -17,7 +17,8 @@ On [Linux](https://en.wikipedia.org/wiki/Linux) normal mode, DisPro uses the `SO
 As a result, the binary must be run with necessary capabilities and with root privilege.
 ```
 sudo setcap cap_net_admin,cap_net_raw="eip" "./DisPro.bin"
-sudo ifconfig lo add 127.0.0.1 netmask 255.255.255.255 mtu 1280 arp allmulti multicast dynamic up
+sudo ifconfig -a lo add 127.0.0.1 netmask 255.255.255.255 mtu 1280 arp allmulti multicast dynamic up
+sudo sysctl --write net.ipv4.conf.all.rp_filter="0"
 ```
 Tunnel mode doesn't require root privilege.
 
