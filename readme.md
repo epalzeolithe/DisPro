@@ -11,6 +11,17 @@ I needed something advanced, secure, stable, portable and light, preferably a si
 ## Installation
 No installation required.
 Just grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases/tag/v1.0.0) and rename it `DisPro.bin` then start speeding up your internet connection.
+### For to work on [Linux](https://en.wikipedia.org/wiki/Linux), follow these.
+DisPro now supports [Linux](https://en.wikipedia.org/wiki/Linux) in both modes, normal and tunnel.
+On [Linux](https://en.wikipedia.org/wiki/Linux) normal mode, DisPro uses the `SOL_SOCKET` and `SO_BINDTODEVICE` from [`syscall`](https://golang.org/pkg/syscall/#BindToDevice) package to bind the interface corresponding to the load balancer IP addresses.
+As a result, the binary must be run with necessary capabilities and with root privilege.
+```
+sudo setcap cap_net_raw="eip" "./DisPro.bin"
+sudo ifconfig lo mtu 1280 arp multicast up
+sudo sysctl --write net.ipv4.conf.all.accept_local="1"
+sudo sysctl --write net.ipv4.conf.all.rp_filter="0"
+```
+Tunnel mode doesn't require root privilege.
 
 ## Usage
 For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) use in front of binary name.
