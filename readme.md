@@ -18,8 +18,6 @@ As a result, the binary must be run with necessary capabilities and with root pr
 ```
 sudo setcap cap_net_raw="eip" "./DisPro.bin"
 sudo ifconfig lo mtu 1280 arp multicast up
-sudo sysctl --write net.ipv4.conf.all.accept_local="1"
-sudo sysctl --write net.ipv4.conf.all.rp_filter="0"
 ```
 Tunnel mode doesn't require root privilege.
 
