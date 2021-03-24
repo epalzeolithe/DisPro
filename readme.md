@@ -16,9 +16,12 @@ DisPro now supports [Linux](https://en.wikipedia.org/wiki/Linux) in both modes, 
 On [Linux](https://en.wikipedia.org/wiki/Linux) normal mode, DisPro uses the `SOL_SOCKET` and `SO_BINDTODEVICE` from [`syscall`](https://golang.org/pkg/syscall/#BindToDevice) package to bind the interface corresponding to the load balancer [IP](https://en.wikipedia.org/wiki/IP_address) addresses.
 As a result, the binary must be run with necessary capabilities and with root privilege.
 ```
-sudo setcap cap_net_admin,cap_net_raw="eip" "./DisPro.bin"
+sudo chmod --verbose 0755 ./DisPro.bin
+sudo chown -c root:daemon ./DisPro.bin
+sudo setcap cap_net_admin,cap_net_raw=eip ./DisPro.bin
 sudo ifconfig -a lo add 127.0.0.1 netmask 255.255.255.255 mtu 1280 arp allmulti multicast dynamic up
-sudo sysctl --write net.ipv4.conf.all.rp_filter="0"
+sudo sysctl --write net.ipv4.conf.all.accept_local=1
+sudo sysctl --write net.ipv4.conf.all.rp_filter=0
 ```
 Tunnel mode doesn't require root privilege.
 
@@ -77,11 +80,11 @@ Will show like this.
 ```
 The example 1.
 ```
-DisPro.bin -host ::1 -port 1080 -multiply 2 -pipe 8192 -try 2 -secure -delay -keep -serial 192.168.0.2@2 192.168.1.2
+DisPro.bin -host ::1 -port 1080 -multiply 2 -pipe 8192 -try 2 -secure -delay -keep -serial 192.168.0.2 192.168.1.2@2
 ```
 The example 2.
 ```
-DisPro.bin -host ::1 -port 1080 -multiply 2 -pipe 8192 -try 2 -tunnel -delay -keep -serial 192.168.0.2:443@2 192.168.1.2:80
+DisPro.bin -host 127.0.0.1 -port 8080 -multiply 1 -pipe 4096 -try 1 -tunnel -delay -keep -serial 192.168.0.2:443@1 192.168.1.2:80
 ```
 
 ## Credits
