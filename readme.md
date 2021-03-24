@@ -40,7 +40,7 @@ DisPro.bin -help
 ```
 Will show this.
 ```
-Usage of C:\Windows\Temp\go-build23831943\b001\exe\main.exe:
+Usage of C:\Users\SirSAC\Downloads\DisPro.bin:
 	-delay
 		Use delay mode (acts a combining a number of small outgoing messages and sending them all at once)
 	-host string
@@ -63,6 +63,7 @@ Usage of C:\Windows\Temp\go-build23831943\b001\exe\main.exe:
 		The number of retries for SOCKS connection (default 0)
 	-tunnel
 		Use tunnel mode (acts as a transparent load balancing proxy)
+PS C:\Users\SirSAC\Downloads>
 ```
 ### For to show all networks, type this.
 ```
@@ -77,14 +78,15 @@ Will show like this.
 2021/03/21 17:15:31 [+] 2, IP: 192.168.43.118
 2021/03/21 17:15:31 [+] 4, IP: fe80::5562:b18d:553f:c48d
 2021/03/21 17:15:31 [+] 4, IP: 169.254.196.141
+PS C:\Users\SirSAC\Downloads>
 ```
 The example 1.
 ```
-DisPro.bin -host ::1 -port 1080 -multiply 2 -pipe 8192 -try 2 -secure -delay -keep -serial 192.168.0.2 192.168.1.2@2
+DisPro.bin -host ::1 -port 1080 -multiply 2 -pipe 8192 -try 2 -secure -delay -keep -serial 192.168.1.2 192.168.43.118@2
 ```
 The example 2.
 ```
-DisPro.bin -host 127.0.0.1 -port 8080 -multiply 1 -pipe 4096 -try 1 -tunnel -delay -keep -serial 192.168.0.2:443@1 192.168.1.2:80
+DisPro.bin -host 127.0.0.1 -port 8080 -multiply 1 -pipe 4096 -try 1 -tunnel -delay -keep -serial 127.0.0.1:443@1 127.0.0.1:80
 ```
 
 ## Credits
