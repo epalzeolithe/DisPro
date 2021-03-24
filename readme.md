@@ -82,11 +82,11 @@ PS C:\Users\SirSAC\Downloads>
 ```
 The example 1.
 ```
-DisPro.bin -host ::1 -port 1080 -multiply 2 -pipe 8192 -try 2 -secure -delay -keep -serial 192.168.1.2 192.168.43.118@2
+DisPro.bin -host ::1 -port 1080 -multiply 2 -pipe 8192 -try 1 -secure -delay -keep -serial 192.168.1.2 192.168.43.118@1
 ```
 The example 2.
 ```
-DisPro.bin -host 127.0.0.1 -port 8080 -multiply 1 -pipe 4096 -try 1 -tunnel -delay -keep -serial 127.0.0.1:443@1 127.0.0.1:80
+DisPro.bin -host 127.0.0.1 -port 8080 -multiply 1 -pipe 4096 -try 2 -tunnel -delay -keep -serial 127.0.0.1:443 127.0.0.1:80@2
 ```
 
 ## Credits
