@@ -1,7 +1,0 @@
-Windows Registry Editor Version 5.00
-; Made by SirSAC for Windows 10.
-[HKey_Current_User\Software\Microsoft\Windows\CurrentVersion\Internet Settings]
-	"MigrateProxy"=dword:00000001
-	"ProxyEnable"=dword:00000001
-	"ProxyOverride"=""
-	"ProxyServer"="[::1]:8118"
