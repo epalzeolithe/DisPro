@@ -128,7 +128,7 @@ func detect_interfaces(address_network string, list_network bool) (string) {
 					if ipnet.IP.To16() != nil {
 						if list_network == false {
 							if ipnet.IP.String() == address_network {
-								return iface.Name + "\x00"
+								return iface.Name
 							}
 						}
 						if list_network == true {
@@ -183,7 +183,7 @@ func parse_network(argument_network []string, tunnel bool, list_network bool) {
 		if iface == "" {
 			log.Fatalln(string(COLOR_RED), "[x] IP address not associated with an interface", address_network, string(COLOR_RESET))
 		}
-		log.Printf("%s [i] Load balancer %d: %s, contention ratio: %d %s\n", string(COLOR_GREEN), idx + 1, address_network, cont_ratio, string(COLOR_RESET))
+		log.Printf("%s [i] Load balancer %s: %s, contention ratio: %d %s\n", string(COLOR_GREEN), iface, address_network, cont_ratio, string(COLOR_RESET))
 		lb_list[idx] = load_balancer {address: Sprintf("%s:%d", address_network, port_network), iface: iface, contention_ratio: cont_ratio, current_connections: 0}
 	}
 }
@@ -206,9 +206,10 @@ func main() {
 		host = String("host", "::1", "The IP address to listen for SOCKS connection")
 		port = Int("port", 1080, "The port number to listen for SOCKS connection")
 		multiply = Int("multiply", 2, "The threads are multiplied by the specific value")
-		pipe = Int("pipe", 8192, "The size of buffers in bytes for more power")
+		pipe = Int("pipe", 8192, "The size of buffers in bytes for more throughput")
 		try = Int("try", 0, "The number of retries for SOCKS connection (default 0)")
 		tunnel = Bool("tunnel", false, "Use tunnel mode (acts as a transparent load balancing proxy)")
+		option = Bool("option", false, "Use option mode (sets the operating system options for maximum potential)")
 		secure = Bool("secure", false, "Use secure mode (acts like using secure ports than usual ones)")
 		delay = Bool("delay", false, "Use delay mode (acts a combining a number of small outgoing messages and sending them all at once)")
 		keep = Bool("keep", false, "Use keep mode (sets whether the operating system should send keep-alive messages on the connection)")
@@ -234,12 +235,13 @@ func main() {
 		log.Fatalln(string(COLOR_RED), "[x] Could not start local server on", host_port, string(COLOR_RESET))
 	}
 	parse_network(Args(), *tunnel, *list)
-	execute_command()
+	execute_command(*option)
 	log.Println(string(COLOR_GREEN), "[i] Local server started on", host_port, string(COLOR_RESET))
 	log.Println(string(COLOR_GREEN), "[i] Multiply thread is", *multiply, string(COLOR_RESET))
 	log.Println(string(COLOR_GREEN), "[i] Pipe size is", *pipe, string(COLOR_RESET))
 	log.Println(string(COLOR_GREEN), "[i] Try count is", *try, string(COLOR_RESET))
 	log.Println(string(COLOR_GREEN), "[i] Tunnel is", *tunnel, string(COLOR_RESET))
+	log.Println(string(COLOR_GREEN), "[i] Option setting is", *option, string(COLOR_RESET))
 	log.Println(string(COLOR_GREEN), "[i] Secure connection is", *secure, string(COLOR_RESET))
 	log.Println(string(COLOR_GREEN), "[i] Delay protocol is", *delay, string(COLOR_RESET))
 	log.Println(string(COLOR_GREEN), "[i] Keep alive is", *keep, string(COLOR_RESET))
