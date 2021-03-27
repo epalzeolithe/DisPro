@@ -40,7 +40,7 @@ For [Darwin](https://en.wikipedia.org/wiki/MacOS) and [Linux](https://en.wikiped
 ```
 DisPro.bin -help
 ```
-> Will show this.
+Will show this.
 ```
 Usage of C:\Users\SirSAC\Downloads\DisPro.bin:
 	-delay
@@ -73,7 +73,7 @@ PS C:\Users\SirSAC\Downloads>
 ```
 DisPro.bin -list
 ```
-> Will show like this.
+Will show like this.
 ```
 2021/03/21 17:15:31 [-] Listing the available addresses for dispatching
 2021/03/21 17:15:31 [+] 1, IP: fe80::e464:1874:c2d3:ec5
