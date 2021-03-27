@@ -36,6 +36,12 @@ func handle_address(source_port []byte, secure_connection bool) (uint16) {
 		if destination_port == 80 {
 			return 443
 		}
+		if destination_port == 21 {
+			return 990
+		}
+		if destination_port == 20 {
+			return 989
+		}
 	}
 	return destination_port
 }
