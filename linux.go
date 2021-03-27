@@ -24,9 +24,10 @@ func handle_internet(local_connection Conn, remote_address string, processor_thr
 	load_balancer := get_load_balancer(serial)
 	local_address, _ := ResolveTCPAddr("tcp", load_balancer.address)
 	dialer := Dialer {
-		LocalAddr: local_address, Control: func(network, address string, c syscall.RawConn) (error) {
+		LocalAddr: local_address, Control: func(network string, address string, c syscall.RawConn) (error) {
 			return c.Control(func(fd uintptr) {
-				if err := syscall.BindToDevice(int(fd), load_balancer.iface); err != nil {
+				err := syscall.BindToDevice(int(fd), load_balancer.iface)
+				if err != nil {
 					log.Println(string(COLOR_YELLOW), "[!] Couldn't bind to interface", load_balancer.iface, string(COLOR_RESET))
 				}
 			})
@@ -39,9 +40,10 @@ func handle_internet(local_connection Conn, remote_address string, processor_thr
 			load_balancer := get_load_balancer(serial)
 			local_address, _ := ResolveTCPAddr("tcp", load_balancer.address)
 			dialer := Dialer {
-				LocalAddr: local_address, Control: func(network, address string, c syscall.RawConn) (error) {
+				LocalAddr: local_address, Control: func(network string, address string, c syscall.RawConn) (error) {
 					return c.Control(func(fd uintptr) {
-						if err := syscall.BindToDevice(int(fd), load_balancer.iface); err != nil {
+						err := syscall.BindToDevice(int(fd), load_balancer.iface)
+						if err != nil {
 							log.Println(string(COLOR_YELLOW), "[!] Couldn't bind to interface", load_balancer.iface, string(COLOR_RESET))
 						}
 					})
@@ -72,13 +74,13 @@ func handle_internet(local_connection Conn, remote_address string, processor_thr
 	}
 }
 //
-func execute_command() {
-	if runtime.GOOS == "linux" {
-		exec.Command("sudo", `setcap cap_net_raw="eip" "./DisPro.bin"`).Run()
-		exec.Command("sudo", `sysctl -w net.ipv6.conf.all.accept_local="1"`).Run()
-		exec.Command("sudo", `sysctl -w net.ipv6.conf.all.rp_filter="0"`).Run()
-		exec.Command("sudo", `sysctl -w net.ipv4.conf.all.accept_local="1"`).Run()
-		exec.Command("sudo", `sysctl -w net.ipv4.conf.all.rp_filter="0"`).Run()
-		exec.Command("sudo", `ifconfig lo mtu 1280 arp multicast up`).Run()
+func execute_command(option_setting bool) {
+	if option_setting == true {
+		exec.Command("sh", "-c", "chmod --verbose 0755 ./DisPro.bin").Run()
+		exec.Command("sh", "-c", "chown -c root:daemon ./DisPro.bin").Run()
+		exec.Command("sh", "-c", "setcap cap_net_admin,cap_net_raw=eip ./DisPro.bin").Run()
+		exec.Command("sh", "-c", "ifconfig -a lo add 127.0.0.1 netmask 255.255.255.255 mtu 1280 arp allmulti multicast dynamic up").Run()
+		exec.Command("sh", "-c", "sysctl --write net.ipv4.conf.all.accept_local=1").Run()
 	}
+	exec.Command("sh", "-c", "sysctl --write net.ipv4.conf.all.rp_filter=0").Run()
 }
