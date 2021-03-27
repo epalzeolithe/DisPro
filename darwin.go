@@ -46,7 +46,5 @@ func handle_internet(local_connection Conn, address string, processor_thread int
 	}
 }
 //
-func execute_command() {
-	if runtime.GOOS == "darwin" {
-	}
+func execute_command(option_setting bool) {
 }
