@@ -10,20 +10,22 @@ I needed something advanced, secure, stable, portable and light, preferably a si
 
 ## Installation
 No installation required.
-Just grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases/tag/v1.0.0) and rename it `DisPro.bin` then start speeding up your internet connection.
-### For to work on [Linux](https://en.wikipedia.org/wiki/Linux), follow these.
+Just grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases/tag/v2.0.0) and rename it `DisPro.bin` then start speeding up your internet connection.
+
+## Informations
 DisPro now supports [Linux](https://en.wikipedia.org/wiki/Linux) in both modes, normal and tunnel.
 On [Linux](https://en.wikipedia.org/wiki/Linux) normal mode, DisPro uses the `SOL_SOCKET` and `SO_BINDTODEVICE` from [`syscall`](https://golang.org/pkg/syscall/#BindToDevice) package to bind the interface corresponding to the load balancer [IP](https://en.wikipedia.org/wiki/IP_address) addresses.
-As a result, the binary must be run with necessary capabilities and with root privilege.
+As a result, the binary must be run with necessary capabilities and with admin or root privilege.
+### For to bypass the [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) and [Linux](https://en.wikipedia.org/wiki/Linux) conflicts, the following commands will be automaticaly executed.
+On [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) will be.
 ```
-sudo chmod --verbose 0755 ./DisPro.bin
-sudo chown -c root:daemon ./DisPro.bin
-sudo setcap cap_net_admin,cap_net_raw=eip ./DisPro.bin
-sudo ifconfig -a lo add 127.0.0.1 netmask 255.255.255.255 mtu 1280 arp allmulti multicast dynamic up
-sudo sysctl --write net.ipv4.conf.all.accept_local=1
-sudo sysctl --write net.ipv4.conf.all.rp_filter=0
+cmd.exe /c net.exe stop /y RemoteAccess
 ```
-Tunnel mode doesn't require root privilege.
+On [Linux](https://en.wikipedia.org/wiki/Linux) will be.
+```
+sh -c sysctl --write net.ipv4.conf.all.rp_filter=0
+```
+Tunnel mode doesn't require admin or root privilege.
 
 ## Usage
 For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) use in front of binary name.
@@ -51,8 +53,10 @@ Usage of C:\Users\SirSAC\Downloads\DisPro.bin:
 		Shows the available addresses for dispatching (non-tunneling mode only)
 	-multiply int
 		The threads are multiplied by the specific value (default 2)
+	-option
+		Use option mode (sets the operating system options for maximum potential)
 	-pipe int
-		The size of buffers in bytes for more power (default 8192)
+		The size of buffers in bytes for more throughput (default 8192)
 	-port int
 		The port number to listen for SOCKS connection (default 1080)
 	-secure
@@ -82,11 +86,11 @@ PS C:\Users\SirSAC\Downloads>
 ```
 The example 1.
 ```
-DisPro.bin -host ::1 -port 1080 -multiply 2 -pipe 8192 -try 1 -secure -delay -keep -serial 192.168.1.2 192.168.43.118@1
+DisPro.bin -host ::1 -port 1080 -multiply 2 -pipe 8192 -try 1 -option -secure -delay -keep -serial 192.168.1.2 192.168.43.118@1
 ```
 The example 2.
 ```
-DisPro.bin -host 127.0.0.1 -port 8080 -multiply 1 -pipe 4096 -try 2 -tunnel -delay -keep -serial 127.0.0.1:443 127.0.0.1:80@2
+DisPro.bin -host 127.0.0.1 -port 8080 -multiply 1 -pipe 4096 -try 2 -tunnel -option -delay -keep -serial 127.0.0.1:443 127.0.0.1:80@2
 ```
 
 ## Credits
