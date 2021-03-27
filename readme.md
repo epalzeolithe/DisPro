@@ -98,4 +98,4 @@ DisPro.bin -host 127.0.0.1 -port 8080 -multiply 1 -pipe 4096 -try 2 -tunnel -opt
 - [dispatch-proxy](https://github.com/alexkirsz/dispatch-proxy): A [SOCKS5](https://en.wikipedia.org/wiki/SOCKS)/[HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) proxy that balances traffic between multiple internet connections.
 
 ## License
-Licensed under [MIT](https://github.com/SirSAC/DisPro/blob/master/license).
+Licensed under the [BSD 3-Clause "New" or "Revised" License](https://github.com/SirSAC/DisPro/blob/master/license).
