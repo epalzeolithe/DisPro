@@ -97,5 +97,8 @@ DisPro.bin -host 127.0.0.1 -port 8080 -multiply 1 -pipe 4096 -try 2 -tunnel -opt
 - [go-dispatch-proxy](https://github.com/extremecoders-re/go-dispatch-proxy): A [SOCKS5](https://en.wikipedia.org/wiki/SOCKS) load balancing proxy to combine multiple internet connections into one.
 - [dispatch-proxy](https://github.com/alexkirsz/dispatch-proxy): A [SOCKS5](https://en.wikipedia.org/wiki/SOCKS)/[HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) proxy that balances traffic between multiple internet connections.
 
+## Conduct
+Conduct under the [Contributor Covenant Code of Conduct](https://github.com/SirSAC/DisPro/blob/master/code_of_conduct.md)
+
 ## License
 Licensed under the [BSD 3-Clause "New" or "Revised" License](https://github.com/SirSAC/DisPro/blob/master/license).
