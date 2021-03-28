@@ -11,6 +11,7 @@ I needed something advanced, secure, stable, portable and light, preferably a si
 ## Installation
 No installation required.
 Just grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases/latest) and rename it `DisPro.bin` then start speeding up your internet connection.
+For `-option` on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) will require the [Privoxy](https://en.wikipedia.org/wiki/Privoxy) software and this can be downloaded from [release](https://sourceforge.net/projects/ijbswa/files/Win32/3.0.32%20%28stable%29) and make sure it is listening on [IP](https://en.wikipedia.org/wiki/IP_address) `::1` and port `8118`.
 
 ## Informations
 DisPro now supports [Linux](https://en.wikipedia.org/wiki/Linux) in both modes, normal and tunnel.
@@ -26,6 +27,14 @@ On [Linux](https://en.wikipedia.org/wiki/Linux) will be.
 sh -c sysctl --write net.ipv4.conf.all.rp_filter=0
 ```
 Tunnel mode doesn't require admin or root privilege.
+Ignore the `-option` for [Darwin](https://en.wikipedia.org/wiki/MacOS), it will do nothing.
+
+## Warning
+The `-option` will change the operating system settings and some of these can be permanent but can be reset them to the default values.
+### For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) the settings will be these.
+<https://github.com/SirSAC/DisPro/blob/master/windows.go#L54-L81>
+### For [Linux](https://en.wikipedia.org/wiki/Linux) the settings will be these.
+<https://github.com/SirSAC/DisPro/blob/master/linux.go#L79-L83>
 
 ## Usage
 For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) use in front of binary name.
