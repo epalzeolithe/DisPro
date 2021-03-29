@@ -1,5 +1,6 @@
 {
 	"Manifest": {
+		"ID": 0,
 		"Name": "Manifest",
 		"Path": "resource.manifest"
 	}
