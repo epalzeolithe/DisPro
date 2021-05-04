@@ -9,7 +9,7 @@ The idea for this project came from [go-dispatch-proxy](https://github.com/extre
 I needed something advanced, secure, stable, portable and light, preferably a single binary that is independent by location without polluting the entire drive and without security or stability issues.
 
 ## Announces
-Coming soon update for: fixing [`cmd.exe`](https://en.wikipedia.org/wiki/Cmd.exe) colors, repairing `-secure` issues.
+Coming soon update for: fixing [`cmd.exe`](https://en.wikipedia.org/wiki/Cmd.exe) colors, making `-secure` smarter, without useless things.
 
 ## Installation
 No installation required.
@@ -76,7 +76,7 @@ Usage of C:\Users\SirSAC\Downloads\DisPro.bin:
 	-serial
 		Use serial mode (acts to serialize access to function get load balancer)
 	-try int
-		The number of retries for SOCKS connection (default 0)
+		The number of retries for SOCKS connection (default 1)
 	-tunnel
 		Use tunnel mode (acts as a transparent load balancing proxy)
 PS C:\Users\SirSAC\Downloads>
@@ -90,15 +90,13 @@ Will show like this.
 2021/03/21 17:15:31 [-] Listing the available addresses for dispatching
 2021/03/21 17:15:31 [+] 1, IP: fe80::e464:1874:c2d3:ec5
 2021/03/21 17:15:31 [+] 1, IP: 192.168.1.2
-2021/03/21 17:15:31 [+] 2, IP: fe80::58c1:394f:7f9f:bc65
-2021/03/21 17:15:31 [+] 2, IP: 192.168.43.118
-2021/03/21 17:15:31 [+] 4, IP: fe80::5562:b18d:553f:c48d
-2021/03/21 17:15:31 [+] 4, IP: 169.254.196.141
+2021/03/21 17:15:31 [+] 2, IP: fe80::4843:2f14:2f6a:81a8
+2021/03/21 17:15:31 [+] 2, IP: 192.168.43.4
 PS C:\Users\SirSAC\Downloads>
 ```
 The example 1.
 ```
-DisPro.bin -host ::1 -port 1080 -multiply 2 -pipe 8192 -try 1 -option -secure -delay -keep -serial 192.168.1.2 192.168.43.118@1
+DisPro.bin -host ::1 -port 1080 -multiply 2 -pipe 8192 -try 1 -option -secure -delay -keep -serial 192.168.1.2 192.168.43.4@1
 ```
 The example 2.
 ```
