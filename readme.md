@@ -8,6 +8,9 @@ Works on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows), [Darwin](ht
 The idea for this project came from [go-dispatch-proxy](https://github.com/extremecoders-re/go-dispatch-proxy) which is written in [Go](https://en.wikipedia.org/wiki/Go_(programming_language)).
 I needed something advanced, secure, stable, portable and light, preferably a single binary that is independent by location without polluting the entire drive and without security or stability issues.
 
+## Announces
+Coming soon update for: fixing `cmd.exe` colors, repairing `-secure` issues.
+
 ## Installation
 No installation required.
 Just grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases/latest) and rename it `DisPro.bin` then start speeding up your internet connection.
