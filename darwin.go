@@ -1,6 +1,8 @@
 // Made by SirSAC for Network.
 package main
 //
+import "C"
+//
 import (
 	. "fmt"
 	"log"
@@ -46,5 +48,5 @@ func handle_internet(local_connection Conn, address string, processor_thread int
 	}
 }
 //
-func execute_command(option_setting bool) {
+func execute_command(mtu_size string, option_setting bool) {
 }
