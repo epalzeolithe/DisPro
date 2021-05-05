@@ -1,6 +1,8 @@
 // Made by SirSAC for Network.
 package main
 //
+import "C"
+//
 import (
 	"bufio"
 	"bytes"
@@ -10,7 +12,9 @@ import (
 	"log"
 	. "net"
 	"os"
+	"os/exec"
 	"runtime"
+	. "runtime/debug"
 	. "strconv"
 	"strings"
 	. "sync"
@@ -31,11 +35,11 @@ var (
 	buffer_byte bytes.Buffer
 )
 //
-func get_load_balancer(serial bool) (*load_balancer) {
+func get_load_balancer(serial bool) (lb *load_balancer) {
 	if serial == true {
 		sync_mutex.Lock()
 	}
-	lb := &lb_list[lb_index]
+	lb = &lb_list[lb_index]
 	lb.current_connections += 1
 	if lb.current_connections == lb.contention_ratio {
 		lb.current_connections = 0
@@ -48,7 +52,7 @@ func get_load_balancer(serial bool) (*load_balancer) {
 		defer sync_group.Done()
 		defer sync_mutex.Unlock()
 	}
-	return lb
+	return
 }
 //
 func handle_pipe(source_packet Conn, destination_packet Conn, buffer_size int, keep_alive bool) {
@@ -132,7 +136,7 @@ func detect_interfaces(address_network string, list_network bool) (string) {
 							}
 						}
 						if list_network == true {
-							log.Printf("%s [+] %s, IP: %s %s\n", string(COLOR_PURPLE), iface.Name, ipnet.IP.String(), string(COLOR_RESET))
+							log.Printf("%s [+] %s, IP: %s %s\n", string(COLOR_MAGENTA), iface.Name, ipnet.IP.String(), string(COLOR_RESET))
 						}
 					}
 				}
@@ -142,7 +146,7 @@ func detect_interfaces(address_network string, list_network bool) (string) {
 	return ""
 }
 //
-func parse_network(argument_network []string, tunnel bool, list_network bool) {
+func parse_network(argument_network []string, tunnel bool, list_network bool) (mtu_standard int, try_standard int) {
 	if len(argument_network) == 0 {
 		log.Fatalln(string(COLOR_RED), "[x] Please specify one or more network addresses", string(COLOR_RESET))
 	}
@@ -185,7 +189,10 @@ func parse_network(argument_network []string, tunnel bool, list_network bool) {
 		}
 		log.Printf("%s [i] Load balancer %s: %s, contention ratio: %d %s\n", string(COLOR_GREEN), iface, address_network, cont_ratio, string(COLOR_RESET))
 		lb_list[idx] = load_balancer {address: Sprintf("%s:%d", address_network, port_network), iface: iface, contention_ratio: cont_ratio, current_connections: 0}
+		mtu_standard = mtu_standard + 1500
+		try_standard = try_standard + cont_ratio
 	}
+	return
 }
 //
 func handle_network(local_connection Conn, processor_thread int, pipe_size int, try_count int, tunnel bool, secure_connection bool, delay_protocol bool, keep_alive bool, serial bool) {
@@ -201,13 +208,16 @@ func handle_network(local_connection Conn, processor_thread int, pipe_size int, 
 }
 //
 func main() {
+	if runtime.GOOS == "windows" {
+		exec.Command("powershell.exe").Run()
+	}
 	processor_thread := runtime.NumCPU()
 	var (
 		host = String("host", "::1", "The IP address to listen for SOCKS connection")
 		port = Int("port", 1080, "The port number to listen for SOCKS connection")
 		multiply = Int("multiply", 2, "The threads are multiplied by the specific value")
+		percent = Int("percent", 200, "The value in percent for garbage collection")
 		pipe = Int("pipe", 8192, "The size of buffers in bytes for more throughput")
-		try = Int("try", 0, "The number of retries for SOCKS connection (default 0)")
 		tunnel = Bool("tunnel", false, "Use tunnel mode (acts as a transparent load balancing proxy)")
 		option = Bool("option", false, "Use option mode (sets the operating system options for maximum potential)")
 		secure = Bool("secure", false, "Use secure mode (acts like using secure ports than usual ones)")
@@ -217,6 +227,7 @@ func main() {
 		list = Bool("list", false, "Shows the available addresses for dispatching (non-tunneling mode only)")
 	)
 	runtime.GOMAXPROCS(processor_thread * *multiply)
+	SetGCPercent(*percent)
 	Parse()
 	if *list == true {
 		detect_interfaces("", *list)
@@ -234,12 +245,16 @@ func main() {
 	if err != nil {
 		log.Fatalln(string(COLOR_RED), "[x] Could not start local server on", host_port, string(COLOR_RESET))
 	}
-	parse_network(Args(), *tunnel, *list)
-	execute_command(*option)
+	mtu_jumbo, try_number := parse_network(Args(), *tunnel, *list)
+	mtu_size := Itoa(mtu_jumbo)
+	execute_command(mtu_size, *option)
+	try_count := try_number - 1
 	log.Println(string(COLOR_GREEN), "[i] Local server started on", host_port, string(COLOR_RESET))
+	log.Println(string(COLOR_GREEN), "[i] Jumbo size is", mtu_jumbo, string(COLOR_RESET))
 	log.Println(string(COLOR_GREEN), "[i] Multiply thread is", *multiply, string(COLOR_RESET))
+	log.Println(string(COLOR_GREEN), "[i] Percent ratio is", *percent, string(COLOR_RESET))
 	log.Println(string(COLOR_GREEN), "[i] Pipe size is", *pipe, string(COLOR_RESET))
-	log.Println(string(COLOR_GREEN), "[i] Try count is", *try, string(COLOR_RESET))
+	log.Println(string(COLOR_GREEN), "[i] Try count is", try_count, string(COLOR_RESET))
 	log.Println(string(COLOR_GREEN), "[i] Tunnel is", *tunnel, string(COLOR_RESET))
 	log.Println(string(COLOR_GREEN), "[i] Option setting is", *option, string(COLOR_RESET))
 	log.Println(string(COLOR_GREEN), "[i] Secure connection is", *secure, string(COLOR_RESET))
@@ -255,7 +270,7 @@ func main() {
 	}
 	for {
 		local_connection, _ := local_host.Accept()
-		go handle_network(local_connection, processor_thread, *pipe, *try, *tunnel, *secure, *delay, *keep, *serial)
+		go handle_network(local_connection, processor_thread, *pipe, try_count, *tunnel, *secure, *delay, *keep, *serial)
 		if *serial == false {
 			continue
 		}
