@@ -9,7 +9,7 @@ The idea for this project came from [go-dispatch-proxy](https://github.com/extre
 I needed something advanced, secure, stable, portable and light, preferably a single binary that is independent by location without polluting the entire drive and without security or stability issues.
 
 ## Announces
-Coming soon update for: fixing [`cmd.exe`](https://en.wikipedia.org/wiki/Cmd.exe) colors, making `-secure` smarter, without useless things.
+Coming soon update for: fixing [`cmd.exe`](https://en.wikipedia.org/wiki/Cmd.exe) colors, making `-secure` smarter, making `-try` automatic, adaptive [MTU](https://en.wikipedia.org/wiki/Maximum_transmission_unit) changing on `-option` for each load balancer address, without useless things.
 
 ## Installation
 No installation required.
