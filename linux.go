@@ -1,6 +1,8 @@
 // Made by SirSAC for Network.
 package main
 //
+import "C"
+//
 import (
 	. "fmt"
 	"log"
@@ -74,12 +76,12 @@ func handle_internet(local_connection Conn, remote_address string, processor_thr
 	}
 }
 //
-func execute_command(option_setting bool) {
+func execute_command(mtu_size string, option_setting bool) {
+	exec.Command("sh", "-c", "chmod --verbose 0755 ./DisPro.bin").Run()
+	exec.Command("sh", "-c", "chown -c root:daemon ./DisPro.bin").Run()
+	exec.Command("sh", "-c", "setcap cap_net_admin,cap_net_raw=eip ./DisPro.bin").Run()
+	exec.Command("sh", "-c", "ifconfig -a lo add 127.0.0.1 netmask 255.255.255.255 mtu", mtu_size, "arp allmulti multicast dynamic up").Run()
 	if option_setting == true {
-		exec.Command("sh", "-c", "chmod --verbose 0755 ./DisPro.bin").Run()
-		exec.Command("sh", "-c", "chown -c root:daemon ./DisPro.bin").Run()
-		exec.Command("sh", "-c", "setcap cap_net_admin,cap_net_raw=eip ./DisPro.bin").Run()
-		exec.Command("sh", "-c", "ifconfig -a lo add 127.0.0.1 netmask 255.255.255.255 mtu 1280 arp allmulti multicast dynamic up").Run()
 		exec.Command("sh", "-c", "sysctl --write net.ipv4.conf.all.accept_local=1").Run()
 	}
 	exec.Command("sh", "-c", "sysctl --write net.ipv4.conf.all.rp_filter=0").Run()
