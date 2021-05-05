@@ -9,7 +9,7 @@ The idea for this project came from [go-dispatch-proxy](https://github.com/extre
 I needed something advanced, secure, stable, portable and light, preferably a single binary that is independent by location without polluting the entire drive and without security or stability issues.
 
 ## Announces
-Update will coming soon after some tests.
+Update is here but only for [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) because the [GoLang](https://golang.org) developers making stupid updates.
 
 ## Installation
 No installation required.
