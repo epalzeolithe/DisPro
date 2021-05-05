@@ -9,17 +9,21 @@ The idea for this project came from [go-dispatch-proxy](https://github.com/extre
 I needed something advanced, secure, stable, portable and light, preferably a single binary that is independent by location without polluting the entire drive and without security or stability issues.
 
 ## Announces
-Coming soon update for: fixing [`cmd.exe`](https://en.wikipedia.org/wiki/Cmd.exe) colors, making `-secure` smarter, making `-try` automatic, adaptive [MTU](https://en.wikipedia.org/wiki/Maximum_transmission_unit) changing on `-option` for each load balancer address, without useless things.
+Update will coming soon after some tests.
 
 ## Installation
 No installation required.
 Just grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases/latest) and rename it `DisPro.bin` then start speeding up your internet connection.
 For `-option` on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) will require the [Privoxy](https://en.wikipedia.org/wiki/Privoxy) software and this can be downloaded from [release](https://sourceforge.net/projects/ijbswa/files/Win32/3.0.32%20%28stable%29) and make sure it is listening on [IP](https://en.wikipedia.org/wiki/IP_address) `::1` and port `8118`.
+If you want to use [`cmd.exe`](https://en.wikipedia.org/wiki/Cmd.exe) on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) this will require the [`powershell.exe`]() to be already installed for fixing text colors but the program can work without it if you don't want text colors anymore.
 
 ## Informations
 DisPro now supports [Linux](https://en.wikipedia.org/wiki/Linux) in both modes, normal and tunnel.
 On [Linux](https://en.wikipedia.org/wiki/Linux) normal mode, DisPro uses the `SOL_SOCKET` and `SO_BINDTODEVICE` from [`syscall`](https://golang.org/pkg/syscall/#BindToDevice) package to bind the interface corresponding to the load balancer [IP](https://en.wikipedia.org/wiki/IP_address) addresses.
 As a result, the binary must be run with necessary capabilities and with admin or root privilege.
+The adaptive [MTU](https://en.wikipedia.org/wiki/Maximum_transmission_unit) changing is automaticaly and increases or decreases for each load balancer address, these changes are not permanent and will be reset them to the default ones when you restart or reboot but not when you hibernate or sleep your computer, im not sure about shotdown.
+The `-secure` is smarter now that means if a website or address support to be forwarded on secure port that will use it, if is not supported that will be on unsecure port for the website or address to can be accessed.
+The option `-try` is removed on new updates because now is automatic and is essential to be always enabled for preventing the issues if an load balancer have some troubles or if is down.
 ### For to bypass the [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) and [Linux](https://en.wikipedia.org/wiki/Linux) conflicts, the following commands will be automaticaly executed.
 On [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) will be.
 ```
@@ -35,9 +39,9 @@ Ignore the `-option` for [Darwin](https://en.wikipedia.org/wiki/MacOS), it will 
 ## Warning
 The `-option` will change the operating system settings and some of these can be permanent but can be reset them to the default values.
 ### For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) the settings will be these.
-<https://github.com/SirSAC/DisPro/blob/master/windows.go#L54-L81>
+<https://github.com/SirSAC/DisPro/blob/master/windows.go#L64-L81>
 ### For [Linux](https://en.wikipedia.org/wiki/Linux) the settings will be these.
-<https://github.com/SirSAC/DisPro/blob/master/linux.go#L79-L83>
+<https://github.com/SirSAC/DisPro/blob/master/linux.go#L85>
 
 ## Usage
 For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) use in front of binary name.
@@ -75,8 +79,6 @@ Usage of C:\Users\SirSAC\Downloads\DisPro.bin:
 		Use secure mode (acts like using secure ports than usual ones)
 	-serial
 		Use serial mode (acts to serialize access to function get load balancer)
-	-try int
-		The number of retries for SOCKS connection (default 1)
 	-tunnel
 		Use tunnel mode (acts as a transparent load balancing proxy)
 PS C:\Users\SirSAC\Downloads>
@@ -96,11 +98,11 @@ PS C:\Users\SirSAC\Downloads>
 ```
 The example 1.
 ```
-DisPro.bin -host ::1 -port 1080 -multiply 2 -pipe 8192 -try 1 -option -secure -delay -keep -serial 192.168.1.2 192.168.43.4@1
+DisPro.bin -host ::1 -port 1080 -multiply 2 -pipe 8192 -option -secure -delay -keep -serial 192.168.1.2 192.168.43.4@1
 ```
 The example 2.
 ```
-DisPro.bin -host 127.0.0.1 -port 8080 -multiply 1 -pipe 4096 -try 2 -tunnel -option -delay -keep -serial 127.0.0.1:443 127.0.0.1:80@2
+DisPro.bin -host 127.0.0.1 -port 8080 -multiply 1 -pipe 4096 -tunnel -option -delay -keep -serial 127.0.0.1:443 127.0.0.1:80@2
 ```
 
 ## Credits
