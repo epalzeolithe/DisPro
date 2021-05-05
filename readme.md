@@ -15,7 +15,7 @@ Update will coming soon after some tests.
 No installation required.
 Just grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases/latest) and rename it `DisPro.bin` then start speeding up your internet connection.
 For `-option` on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) will require the [Privoxy](https://en.wikipedia.org/wiki/Privoxy) software and this can be downloaded from [release](https://sourceforge.net/projects/ijbswa/files/Win32/3.0.32%20%28stable%29) and make sure it is listening on [IP](https://en.wikipedia.org/wiki/IP_address) `::1` and port `8118`.
-If you want to use [`cmd.exe`](https://en.wikipedia.org/wiki/Cmd.exe) on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) this will require the [`powershell.exe`]() to be already installed for fixing text colors but the program can work without it if you don't want text colors anymore.
+If you want to use [`cmd.exe`](https://en.wikipedia.org/wiki/Cmd.exe) on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) this will require the [`powershell.exe`](https://en.wikipedia.org/wiki/PowerShell) to be already installed for fixing text colors but the program can work without it if you don't want text colors anymore.
 
 ## Informations
 DisPro now supports [Linux](https://en.wikipedia.org/wiki/Linux) in both modes, normal and tunnel.
