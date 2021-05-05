@@ -1,6 +1,8 @@
 // Made by SirSAC for Network.
 package main
 //
+import "C"
+//
 import (
 	. "fmt"
 	"log"
@@ -47,20 +49,20 @@ func handle_internet(local_connection Conn, address string, processor_thread int
 	}
 }
 //
-func execute_command(option_setting bool) {
+func execute_command(mtu_size string, option_setting bool) {
 	exec.Command("cmd.exe", "/c", "wmic.exe process where 'name='DisPro.bin'' call setpriority realtime").Run()
 	exec.Command("cmd.exe", "/c", "net.exe stop /y RemoteAccess").Run()
+	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv6 set interface interface=1 metric=1 store=active").Run()
+	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv6 set subinterface interface=1 mtu=", mtu_size, "store=active").Run()
+	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv6 set address interface=1 type=anycast store=active").Run()
+	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv6 set address interface=1 address=::1 type=unicast validlifetime=infinite preferredlifetime=infinite store=active").Run()
+	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv4 set interface interface=1 metric=1 store=active").Run()
+	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv4 set subinterface interface=1 mtu=", mtu_size, "store=active").Run()
+	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv4 set address name=1 source=dhcp type=anycast store=active").Run()
+	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv4 set address name=1 source=static address=127.0.0.1 mask=255.255.255.255 gwmetric=1 type=unicast store=active").Run()
 	if option_setting == true {
 		exec.Command("cmd.exe", "/c", "sc.exe config RemoteAccess start=disabled").Run()
-		exec.Command("cmd.exe", "/c", "netsh.exe interface ipv6 set interface interface=1 metric=1 store=active").Run()
-		exec.Command("cmd.exe", "/c", "netsh.exe interface ipv6 set subinterface interface=1 mtu=1280 store=active").Run()
-		exec.Command("cmd.exe", "/c", "netsh.exe interface ipv6 set address interface=1 type=anycast store=active").Run()
-		exec.Command("cmd.exe", "/c", "netsh.exe interface ipv6 set address interface=1 address=::1 type=unicast validlifetime=infinite preferredlifetime=infinite store=active").Run()
 		exec.Command("cmd.exe", "/c", "netsh.exe interface ipv6 set dnsservers name=1 source=dhcp register=both validate=yes").Run()
-		exec.Command("cmd.exe", "/c", "netsh.exe interface ipv4 set interface interface=1 metric=1 store=active").Run()
-		exec.Command("cmd.exe", "/c", "netsh.exe interface ipv4 set subinterface interface=1 mtu=576 store=active").Run()
-		exec.Command("cmd.exe", "/c", "netsh.exe interface ipv4 set address name=1 source=dhcp type=anycast store=active").Run()
-		exec.Command("cmd.exe", "/c", "netsh.exe interface ipv4 set address name=1 source=static address=127.0.0.1 mask=255.255.255.255 gwmetric=1 type=unicast store=active").Run()
 		exec.Command("cmd.exe", "/c", "netsh.exe interface ipv4 set dnsservers name=1 source=dhcp register=both validate=yes").Run()
 		exec.Command("cmd.exe", "/c", "netsh.exe interface tcp set global ecncapability=enabled").Run()
 		exec.Command("cmd.exe", "/c", "netsh.exe interface tcp set global fastopen=enabled").Run()
@@ -77,7 +79,7 @@ func execute_command(option_setting bool) {
 		exec.Command("cmd.exe", "/c", "netsh.exe winhttp set proxy proxy-server=[::1]:8118").Run()
 		exec.Command("cmd.exe", "/c", "netsh.exe http add iplisten ipaddress=::1").Run()
 		exec.Command("cmd.exe", "/c", "netsh.exe http add iplisten ipaddress=127.0.0.1").Run()
-		exec.Command("cmd.exe", "/c", "ipconfig.exe /registerdns").Run()
-		exec.Command("cmd.exe", "/c", "ipconfig.exe /flushdns").Run()
 	}
+	exec.Command("cmd.exe", "/c", "ipconfig.exe /registerdns").Run()
+	exec.Command("cmd.exe", "/c", "ipconfig.exe /flushdns").Run()
 }
