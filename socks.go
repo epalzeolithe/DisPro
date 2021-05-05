@@ -1,12 +1,15 @@
 // Made by SirSAC for Network.
 package main
 //
+import "C"
+//
 import (
 	. "encoding/binary"
 	. "errors"
 	. "fmt"
 	"log"
 	. "net"
+	"time"
 )
 //
 func server_choice(local_connection Conn) (error) {
@@ -21,26 +24,36 @@ func client_greeting(local_connection Conn) (byte, []byte, error) {
 	if nRead, err := local_connection.Read(buf); err != nil || nRead != len(buf) {
 		return 0, nil, New("[!] Client greeting failed")
 	}
+	ver := buf[0]
 	nauth := buf[1]
 	auth := make([]byte, nauth)
 	if nRead, err := local_connection.Read(auth); err != nil || nRead != int(nauth) {
 		return 0, nil, New("[!] Client greeting failed")
 	}
-	ver := buf[0]
 	return ver, auth, nil
 }
 //
-func handle_address(source_port []byte, secure_connection bool) (uint16) {
+func handle_address(source_address string, source_port []byte, secure_connection bool) (uint16) {
 	destination_port := BigEndian.Uint16(source_port)
 	if secure_connection == true {
+		timeout_verify, _ := time.ParseDuration("125ms")
 		if destination_port == 80 {
-			return 443
+			_, err := DialTimeout("tcp", "source_address:443", timeout_verify)
+			if err == nil {
+				return 443
+			}
 		}
 		if destination_port == 21 {
-			return 990
+			_, err := DialTimeout("tcp", "source_address:990", timeout_verify)
+			if err == nil {
+				return 990
+			}
 		}
 		if destination_port == 20 {
-			return 989
+			_, err := DialTimeout("tcp", "source_address:989", timeout_verify)
+			if err == nil {
+				return 989
+			}
 		}
 	}
 	return destination_port
@@ -91,8 +104,9 @@ func client_request(local_connection Conn, secure_connection bool) (string, erro
 				local_connection.Close()
 				return "", New("[!] Client connection request failed")
 			}
-			destination_port := handle_address(dstport, secure_connection)
-			address = Sprintf("%s:%d", string(domain_name), destination_port)
+			destination_address := Sprintf("%s", string(domain_name))
+			destination_port := handle_address(destination_address, dstport, secure_connection)
+			address = Sprintf("%s:%d", destination_address, destination_port)
 		case IPV6_ADDRESS:
 			ipv6_address := make([]byte, 16)
 			if nRead, err := local_connection.Read(ipv6_address); err != nil || nRead != len(ipv6_address) {
@@ -105,8 +119,9 @@ func client_request(local_connection Conn, secure_connection bool) (string, erro
 				local_connection.Close()
 				return "", New("[!] Client connection request failed")
 			}
-			destination_port := handle_address(dstport, secure_connection)
-			address = Sprintf("[%d:%d:%d:%d:%d:%d:%d:%d]:%d", ipv6_address[0], ipv6_address[1], ipv6_address[2], ipv6_address[3], ipv6_address[4], ipv6_address[5], ipv6_address[6], ipv6_address[7], destination_port)
+			destination_address := Sprintf("[%d:%d:%d:%d:%d:%d:%d:%d]", ipv6_address[0], ipv6_address[1], ipv6_address[2], ipv6_address[3], ipv6_address[4], ipv6_address[5], ipv6_address[6], ipv6_address[7])
+			destination_port := handle_address(destination_address, dstport, secure_connection)
+			address = Sprintf("%s:%d", destination_address, destination_port)
 		case IPV4_ADDRESS:
 			ipv4_address := make([]byte, 4)
 			if nRead, err := local_connection.Read(ipv4_address); err != nil || nRead != len(ipv4_address) {
@@ -119,8 +134,9 @@ func client_request(local_connection Conn, secure_connection bool) (string, erro
 				local_connection.Close()
 				return "", New("[!] Client connection request failed")
 			}
-			destination_port := handle_address(dstport, secure_connection)
-			address = Sprintf("%d.%d.%d.%d:%d", ipv4_address[0], ipv4_address[1], ipv4_address[2], ipv4_address[3], destination_port)
+			destination_address := Sprintf("%d.%d.%d.%d", ipv4_address[0], ipv4_address[1], ipv4_address[2], ipv4_address[3])
+			destination_port := handle_address(destination_address, dstport, secure_connection)
+			address = Sprintf("%s:%d", destination_address, destination_port)
 		default:
 			local_connection.Write([]byte {5, ADDRESS_TYPE_NOT_SUPPORTED, 0, 1, 0, 0, 0, 0, 0, 0})
 			local_connection.Close()
