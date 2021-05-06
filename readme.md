@@ -9,7 +9,7 @@ The idea for this project came from [go-dispatch-proxy](https://github.com/extre
 I needed something advanced, secure, stable, portable and light, preferably a single binary that is independent by location without polluting the entire drive and without security or stability issues.
 
 ## Announces
-Update is here but only for [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) because the [GoLang](https://golang.org) developers making stupid updates.
+Update is here, enjoy.
 
 ## Installation
 No installation required.
@@ -39,9 +39,9 @@ Ignore the `-option` for [Darwin](https://en.wikipedia.org/wiki/MacOS), it will 
 ## Warning
 The `-option` will change the operating system settings and some of these can be permanent but can be reset them to the default values.
 ### For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) the settings will be these.
-<https://github.com/SirSAC/DisPro/blob/master/windows.go#L64-L81>
+<https://github.com/SirSAC/DisPro/blob/master/windows.go#L62-L79>
 ### For [Linux](https://en.wikipedia.org/wiki/Linux) the settings will be these.
-<https://github.com/SirSAC/DisPro/blob/master/linux.go#L85>
+<https://github.com/SirSAC/DisPro/blob/master/linux.go#L83>
 
 ## Usage
 For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) use in front of binary name.
