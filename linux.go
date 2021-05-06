@@ -1,8 +1,6 @@
 // Made by SirSAC for Network.
 package main
 //
-import "C"
-//
 import (
 	. "fmt"
 	"log"
