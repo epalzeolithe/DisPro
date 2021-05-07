@@ -18,35 +18,35 @@ import (
 	. "sync"
 )
 //
-type load_balancer struct {
-	address string
-	iface string
+type struct_balancer struct {
+	interface_address string
 	contention_ratio int
-	current_connections int
+	interface_name string
+	current_connection int
 }
 //
 var (
-	sync_group *WaitGroup
-	sync_mutex *Mutex
-	lb_list []load_balancer
+	lb_list []struct_balancer
 	lb_index int = 0
 	buffer_byte bytes.Buffer
+	sync_group *WaitGroup
+	sync_mutex *Mutex
 )
 //
-func get_load_balancer(serial bool) (lb *load_balancer) {
-	if serial == true {
+func get_load_balancer(serial_order bool) (load_balancer *struct_balancer) {
+	if serial_order == true {
 		sync_mutex.Lock()
 	}
-	lb = &lb_list[lb_index]
-	lb.current_connections += 1
-	if lb.current_connections == lb.contention_ratio {
-		lb.current_connections = 0
+	load_balancer = &lb_list[lb_index]
+	load_balancer.current_connection += 1
+	if load_balancer.current_connection == load_balancer.contention_ratio {
+		load_balancer.current_connection = 0
 		lb_index += 1
 		if lb_index == len(lb_list) {
 			lb_index = 0
 		}
 	}
-	if serial == true {
+	if serial_order == true {
 		defer sync_group.Done()
 		defer sync_mutex.Unlock()
 	}
@@ -61,63 +61,60 @@ func handle_pipe(source_packet Conn, destination_packet Conn, buffer_size int, k
 	buffer_packet := buffer_byte.Bytes()
 	buffer_source := bufio.NewReaderSize(source_packet, buffer_size)
 	buffer_destination := bufio.NewWriterSize(destination_packet, buffer_size)
-	_, err := io.CopyBuffer(buffer_destination, buffer_source, buffer_packet)
-	if err != nil {
-		runtime.Goexit()
-	}
+	io.CopyBuffer(buffer_destination, buffer_source, buffer_packet)
 }
 //
-func handle_proxy(local_connection Conn, remote_connection *TCPConn, load_balancer_addr string, address string, pipe_size int, delay_protocol bool, keep_alive bool) {
+func handle_proxy(local_connection Conn, remote_connection *TCPConn, balancer_address string, target_address string, pipe_size int, delay_protocol bool, keep_alive bool) {
 	remote_connection.SetNoDelay(delay_protocol)
 	remote_connection.SetKeepAlive(keep_alive)
 	if keep_alive == false {
 		remote_connection.SetLinger(0)
 	}
 	local_connection.Write([]byte {5, REQUEST_GRANTED, 0, 1, 0, 0, 0, 0, 0, 0})
-	log.Println(string(COLOR_BLUE), "[*]", address, "-=>", load_balancer_addr, string(COLOR_RESET))
+	log.Println(string(COLOR_BLUE), "[*]", target_address, "-=>", balancer_address, string(COLOR_RESET))
 	go handle_pipe(local_connection, remote_connection, pipe_size, keep_alive)
 	go handle_pipe(remote_connection, local_connection, pipe_size, keep_alive)
 }
 //
-func handle_tunnel(local_connection Conn, processor_thread int, pipe_size int, try_count int, delay_protocol bool, keep_alive bool, serial bool) {
-	if serial == true {
+func handle_tunnel(local_connection Conn, processor_thread int, pipe_size int, try_count int, delay_protocol bool, keep_alive bool, serial_order bool) {
+	if serial_order == true {
 		sync_group.Add(processor_thread)
 	}
+	load_balancer := get_load_balancer(serial_order)
+	remote_address, _ := ResolveTCPAddr("tcp", load_balancer.interface_address)
 	print_message := string("Tunnelled")
-	load_balancer := get_load_balancer(serial)
-	remote_address, _ := ResolveTCPAddr("tcp", load_balancer.address)
 	remote_connection, err := DialTCP("tcp", nil, remote_address)
 	if err != nil {
 		try_again := 0
 		for try_again < try_count {
-			load_balancer := get_load_balancer(serial)
-			remote_address, _ := ResolveTCPAddr("tcp", load_balancer.address)
+			load_balancer := get_load_balancer(serial_order)
+			remote_address, _ := ResolveTCPAddr("tcp", load_balancer.interface_address)
 			remote_connection, err := DialTCP("tcp", nil, remote_address)
 			if err == nil {
-				go handle_proxy(local_connection, remote_connection, load_balancer.address, print_message, pipe_size, delay_protocol, keep_alive)
-				if serial == true {
+				go handle_proxy(local_connection, remote_connection, load_balancer.interface_address, print_message, pipe_size, delay_protocol, keep_alive)
+				if serial_order == true {
 					defer sync_group.Wait()
 				}
 				return
 			}
 			try_again++
 		}
-		log.Println(string(COLOR_YELLOW), "[!]", load_balancer.address, Sprintf("{%s}", err), string(COLOR_RESET))
+		log.Println(string(COLOR_YELLOW), "[!]", load_balancer.interface_address, Sprintf("{%s}", err), string(COLOR_RESET))
 		local_connection.Write([]byte {5, HOST_UNREACHABLE, 0, 1, 0, 0, 0, 0, 0, 0})
 		local_connection.Close()
-		if serial == true {
+		if serial_order == true {
 			defer sync_group.Wait()
 			defer sync_group.Done()
 		}
 		runtime.Goexit()
 	}
-	go handle_proxy(local_connection, remote_connection, load_balancer.address, print_message, pipe_size, delay_protocol, keep_alive)
-	if serial == true {
+	go handle_proxy(local_connection, remote_connection, load_balancer.interface_address, print_message, pipe_size, delay_protocol, keep_alive)
+	if serial_order == true {
 		defer sync_group.Wait()
 	}
 }
 //
-func detect_interfaces(address_network string, list_network bool) (string) {
+func detect_interface(network_address string, list_network bool) (string) {
 	if list_network == true {
 		log.Println(string(COLOR_CYAN), "[-] Listing the available addresses for dispatching", string(COLOR_RESET))
 	}
@@ -129,7 +126,7 @@ func detect_interfaces(address_network string, list_network bool) (string) {
 				if ipnet, ok := addr.(*IPNet); ok && !ipnet.IP.IsLoopback() {
 					if ipnet.IP.To16() != nil {
 						if list_network == false {
-							if ipnet.IP.String() == address_network {
+							if ipnet.IP.String() == network_address {
 								return iface.Name
 							}
 						}
@@ -148,60 +145,62 @@ func parse_network(argument_network []string, tunnel bool, list_network bool) (m
 	if len(argument_network) == 0 {
 		log.Fatalln(string(COLOR_RED), "[x] Please specify one or more network addresses", string(COLOR_RESET))
 	}
-	lb_list = make([]load_balancer, NArg())
+	lb_list = make([]struct_balancer, NArg())
 	for idx, a := range argument_network {
-		splitted := strings.Split(a, "@")
 		var (
-			address_network string
-			port_network int
+			network_address string
+			network_port int
+			contention_ratio int = 1
+			interface_name string
 			err error
-			cont_ratio int = 1
 		)
+		splitted := strings.Split(a, "@")
+		if tunnel == false {
+			network_address = splitted[0]
+			network_port = 0
+			interface_name = detect_interface(network_address, list_network)
+			if interface_name == "" {
+				log.Fatalln(string(COLOR_RED), "[x] IP address not associated with an interface", network_address, string(COLOR_RESET))
+			}
+		}
 		if tunnel == true {
 			ip_port := strings.Split(splitted[0], ":")
 			if len(ip_port) != 2 {
 				log.Fatalln(string(COLOR_RED), "[x] Invalid address specification", splitted[0], string(COLOR_RESET))
 			}
-			address_network = ip_port[0]
-			port_network, err = Atoi(ip_port[1])
-			if err != nil || port_network < 0 || port_network > 65535 {
+			network_address = ip_port[0]
+			network_port, err = Atoi(ip_port[1])
+			if err != nil || network_port < 0 || network_port > 65535 {
 				log.Fatalln(string(COLOR_RED), "[x] Invalid port", splitted[0], string(COLOR_RESET))
 			}
+			interface_name = ""
 		}
-		if tunnel == false {
-			address_network = splitted[0]
-			port_network = 0
-		}
-		if ParseIP(address_network).To16() == nil {
-			log.Fatalln(string(COLOR_RED), "[x] Invalid address", address_network, string(COLOR_RESET))
+		if ParseIP(network_address).To16() == nil {
+			log.Fatalln(string(COLOR_RED), "[x] Invalid address", network_address, string(COLOR_RESET))
 		}
 		if len(splitted) > 1 {
-			cont_ratio, err = Atoi(splitted[1])
-			if err != nil || cont_ratio <= 0 {
-				log.Fatalln(string(COLOR_RED), "[x] Invalid contention ratio for", address_network, string(COLOR_RESET))
+			contention_ratio, err = Atoi(splitted[1])
+			if err != nil || contention_ratio <= 0 {
+				log.Fatalln(string(COLOR_RED), "[x] Invalid contention ratio for", network_address, string(COLOR_RESET))
 			}
 		}
-		iface := detect_interfaces(address_network, list_network)
-		if iface == "" {
-			log.Fatalln(string(COLOR_RED), "[x] IP address not associated with an interface", address_network, string(COLOR_RESET))
-		}
-		log.Printf("%s [i] Load balancer %s: %s, contention ratio: %d %s\n", string(COLOR_GREEN), iface, address_network, cont_ratio, string(COLOR_RESET))
-		lb_list[idx] = load_balancer {address: Sprintf("%s:%d", address_network, port_network), iface: iface, contention_ratio: cont_ratio, current_connections: 0}
+		log.Printf("%s [i] Load balancer %s: %s, contention ratio: %d %s\n", string(COLOR_GREEN), interface_name, network_address, contention_ratio, string(COLOR_RESET))
+		lb_list[idx] = struct_balancer {interface_address: Sprintf("%s:%d", network_address, network_port), contention_ratio: contention_ratio, interface_name: interface_name, current_connection: 0}
 		mtu_standard = mtu_standard + 1500
-		try_standard = try_standard + cont_ratio
+		try_standard = try_standard + contention_ratio
 	}
 	return
 }
 //
-func handle_network(local_connection Conn, processor_thread int, pipe_size int, try_count int, tunnel bool, secure_connection bool, delay_protocol bool, keep_alive bool, serial bool) {
+func handle_network(local_connection Conn, processor_thread int, pipe_size int, try_count int, tunnel bool, secure_connection bool, delay_protocol bool, keep_alive bool, serial_order bool) {
 	if tunnel == false {
-		address, err := handle_socks(local_connection, secure_connection)
+		target_address, err := handle_socks(local_connection, secure_connection)
 		if err == nil {
-			go handle_internet(local_connection, address, processor_thread, pipe_size, try_count, delay_protocol, keep_alive, serial)
+			go handle_internet(local_connection, target_address, processor_thread, pipe_size, try_count, delay_protocol, keep_alive, serial_order)
 		}
 	}
 	if tunnel == true {
-		go handle_tunnel(local_connection, processor_thread, pipe_size, try_count, delay_protocol, keep_alive, serial)
+		go handle_tunnel(local_connection, processor_thread, pipe_size, try_count, delay_protocol, keep_alive, serial_order)
 	}
 }
 //
@@ -223,12 +222,13 @@ func main() {
 		keep = Bool("keep", false, "Use keep mode (sets whether the operating system should send keep-alive messages on the connection)")
 		serial = Bool("serial", false, "Use serial mode (acts to serialize access to function get load balancer)")
 		list = Bool("list", false, "Shows the available addresses for dispatching (non-tunneling mode only)")
+		delay_protocol bool
 	)
 	runtime.GOMAXPROCS(processor_thread * *multiply)
 	SetGCPercent(*percent)
 	Parse()
 	if *list == true {
-		detect_interfaces("", *list)
+		detect_interface("", *list)
 		os.Exit(0)
 	}
 	if ParseIP(*host).To16() == nil {
@@ -260,7 +260,10 @@ func main() {
 	log.Println(string(COLOR_GREEN), "[i] Keep alive is", *keep, string(COLOR_RESET))
 	log.Println(string(COLOR_GREEN), "[i] Serial order is", *serial, string(COLOR_RESET))
 	if *delay == false {
-		*delay = true
+		delay_protocol = true
+	}
+	if *delay == true {
+		delay_protocol = false
 	}
 	if *serial == true {
 		sync_group = &WaitGroup {}
@@ -268,7 +271,7 @@ func main() {
 	}
 	for {
 		local_connection, _ := local_host.Accept()
-		go handle_network(local_connection, processor_thread, *pipe, try_count, *tunnel, *secure, *delay, *keep, *serial)
+		go handle_network(local_connection, processor_thread, *pipe, try_count, *tunnel, *secure, delay_protocol, *keep, *serial)
 		if *serial == false {
 			continue
 		}
