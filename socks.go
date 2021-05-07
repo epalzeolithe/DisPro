@@ -31,7 +31,7 @@ func client_greeting(local_connection Conn) (byte, []byte, error) {
 	return ver, auth, nil
 }
 //
-func handle_address(source_address string, source_port []byte, secure_connection bool) (uint16) {
+func handle_target(source_address string, source_port []byte, secure_connection bool) (uint16) {
 	destination_port := BigEndian.Uint16(source_port)
 	if secure_connection == true {
 		timeout_verify, _ := time.ParseDuration("125ms")
@@ -82,7 +82,7 @@ func client_request(local_connection Conn, secure_connection bool) (string, erro
 	}
 	dstaddr := header[3]
 	dstport := make([]byte, 2)
-	var address string
+	var target_address string
 	switch dstaddr {
 		case DOMAIN_NAME:
 			domain_name_length := make([]byte, 1)
@@ -103,8 +103,8 @@ func client_request(local_connection Conn, secure_connection bool) (string, erro
 				return "", New("[!] Client connection request failed")
 			}
 			destination_address := Sprintf("%s", string(domain_name))
-			destination_port := handle_address(destination_address, dstport, secure_connection)
-			address = Sprintf("%s:%d", destination_address, destination_port)
+			destination_port := handle_target(destination_address, dstport, secure_connection)
+			target_address = Sprintf("%s:%d", destination_address, destination_port)
 		case IPV6_ADDRESS:
 			ipv6_address := make([]byte, 16)
 			if nRead, err := local_connection.Read(ipv6_address); err != nil || nRead != len(ipv6_address) {
@@ -118,8 +118,8 @@ func client_request(local_connection Conn, secure_connection bool) (string, erro
 				return "", New("[!] Client connection request failed")
 			}
 			destination_address := Sprintf("[%d:%d:%d:%d:%d:%d:%d:%d]", ipv6_address[0], ipv6_address[1], ipv6_address[2], ipv6_address[3], ipv6_address[4], ipv6_address[5], ipv6_address[6], ipv6_address[7])
-			destination_port := handle_address(destination_address, dstport, secure_connection)
-			address = Sprintf("%s:%d", destination_address, destination_port)
+			destination_port := handle_target(destination_address, dstport, secure_connection)
+			target_address = Sprintf("%s:%d", destination_address, destination_port)
 		case IPV4_ADDRESS:
 			ipv4_address := make([]byte, 4)
 			if nRead, err := local_connection.Read(ipv4_address); err != nil || nRead != len(ipv4_address) {
@@ -133,14 +133,14 @@ func client_request(local_connection Conn, secure_connection bool) (string, erro
 				return "", New("[!] Client connection request failed")
 			}
 			destination_address := Sprintf("%d.%d.%d.%d", ipv4_address[0], ipv4_address[1], ipv4_address[2], ipv4_address[3])
-			destination_port := handle_address(destination_address, dstport, secure_connection)
-			address = Sprintf("%s:%d", destination_address, destination_port)
+			destination_port := handle_target(destination_address, dstport, secure_connection)
+			target_address = Sprintf("%s:%d", destination_address, destination_port)
 		default:
 			local_connection.Write([]byte {5, ADDRESS_TYPE_NOT_SUPPORTED, 0, 1, 0, 0, 0, 0, 0, 0})
 			local_connection.Close()
 			return "", New("[!] Unsupported address type")
 	}
-	return address, nil
+	return target_address, nil
 }
 //
 func handle_socks(local_connection Conn, secure_connection bool) (string, error) {
@@ -152,10 +152,10 @@ func handle_socks(local_connection Conn, secure_connection bool) (string, error)
 		log.Println(string(COLOR_YELLOW), err, string(COLOR_RESET))
 		return "", err
 	}
-	address, err := client_request(local_connection, secure_connection)
+	target_address, err := client_request(local_connection, secure_connection)
 	if err != nil {
 		log.Println(string(COLOR_YELLOW), err, string(COLOR_RESET))
 		return "", err
 	}
-	return address, nil
+	return target_address, nil
 }
