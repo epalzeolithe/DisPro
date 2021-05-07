@@ -9,7 +9,7 @@ The idea for this project came from [go-dispatch-proxy](https://github.com/extre
 I needed something advanced, secure, stable, portable and light, preferably a single binary that is independent by location without polluting the entire drive and without security or stability issues.
 
 ## Announces
-A new update will come for fixing the `-tunnel`, the `-delay` and critical issues.
+Update is here, enjoy.
 
 ## Installation
 No installation required.
