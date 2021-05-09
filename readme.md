@@ -27,10 +27,23 @@ The option `-try` is removed on new updates because now is automatic and is esse
 ### For to bypass the [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) and [Linux](https://en.wikipedia.org/wiki/Linux) conflicts, the following commands will be automaticaly executed.
 On [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) will be.
 ```
+cmd.exe /c wmic.exe process where 'name='DisPro.bin'' call setpriority realtime
 cmd.exe /c net.exe stop /y RemoteAccess
+cmd.exe /c netsh.exe interface ipv6 set interface interface=1 metric=1 store=active
+cmd.exe /c netsh.exe interface ipv6 set subinterface interface=1 mtu=(Adaptive MTU) store=active
+cmd.exe /c netsh.exe interface ipv6 set address interface=1 type=anycast store=active
+cmd.exe /c netsh.exe interface ipv6 set address interface=1 address=::1 type=unicast validlifetime=infinite preferredlifetime=infinite store=active
+cmd.exe /c netsh.exe interface ipv4 set interface interface=1 metric=1 store=active
+cmd.exe /c netsh.exe interface ipv4 set subinterface interface=1 mtu=(Adaptive MTU) store=active
+cmd.exe /c netsh.exe interface ipv4 set address name=1 source=dhcp type=anycast store=active
+cmd.exe /c netsh.exe interface ipv4 set address name=1 source=static address=127.0.0.1 mask=255.255.255.255 gwmetric=1 type=unicast store=active
 ```
 On [Linux](https://en.wikipedia.org/wiki/Linux) will be.
 ```
+sh -c chmod --verbose 0755 ./DisPro.bin
+sh -c chown -c root:daemon ./DisPro.bin
+sh -c setcap cap_net_admin,cap_net_raw=eip ./DisPro.bin
+sh -c ifconfig -a lo add 127.0.0.1 netmask 255.255.255.255 mtu (Adaptive MTU) arp allmulti multicast dynamic up
 sh -c sysctl --write net.ipv4.conf.all.rp_filter=0
 ```
 Tunnel mode doesn't require admin or root privilege.
