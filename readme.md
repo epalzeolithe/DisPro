@@ -19,11 +19,11 @@ For `-option` on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) will
 If you want to use [`cmd.exe`](https://en.wikipedia.org/wiki/Cmd.exe) on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) this will require the [`powershell.exe`](https://en.wikipedia.org/wiki/PowerShell) to be already installed for fixing text colors but the program can work without it if you don't want text colors anymore.
 
 ## Informations
-DisPro now supports [Linux](https://en.wikipedia.org/wiki/Linux) in both modes, normal and tunnel.
-On [Linux](https://en.wikipedia.org/wiki/Linux) normal mode, DisPro uses the `SOL_SOCKET` and `SO_BINDTODEVICE` from [`syscall`](https://golang.org/pkg/syscall/#BindToDevice) package to bind the interface corresponding to the load balancer [IP](https://en.wikipedia.org/wiki/IP_address) addresses.
-As a result, the binary must be run with necessary capabilities and with admin or root privilege.
-The adaptive [MTU](https://en.wikipedia.org/wiki/Maximum_transmission_unit) changing is automaticaly and increases or decreases for each load balancer address, this function is named as Jumbo in program, these changes are not permanent and will be reset them to the default ones when you restart or reboot but not when you hibernate or sleep your computer, im not sure about shotdown.
-The `-secure` is smarter now that means if a website or address support to be forwarded on secure port that will use it, if is not supported that will be on unsecure port for the website or address to can be accessed.
+DisPro now supports [Linux](https://en.wikipedia.org/wiki/Linux) in both modes, normal and tunnel. <br>
+On [Linux](https://en.wikipedia.org/wiki/Linux) normal mode, DisPro uses the `SOL_SOCKET` and `SO_BINDTODEVICE` from [`syscall`](https://golang.org/pkg/syscall/#BindToDevice) package to bind the interface corresponding to the load balancer [IP](https://en.wikipedia.org/wiki/IP_address) addresses. <br>
+As a result, the binary must be run with necessary capabilities and with admin or root privilege. <br>
+The adaptive [MTU](https://en.wikipedia.org/wiki/Maximum_transmission_unit) changing is automaticaly and increases or decreases for each load balancer address, this function is named as Jumbo in program, these changes are not permanent and will be reset them to the default ones when you restart or reboot but not when you hibernate or sleep your computer, im not sure about shotdown. <br>
+The `-secure` is smarter now that means if a website or address support to be forwarded on secure port that will use it, if is not supported that will be on unsecure port for the website or address to can be accessed. <br>
 The option `-try` is removed on new updates because now is automatic and is essential to be always enabled for preventing the issues if an load balancer have some troubles or if is down.
 ### For to bypass the [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) and [Linux](https://en.wikipedia.org/wiki/Linux) conflicts, the following commands will be automaticaly executed.
 On [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) will be.
