@@ -10,6 +10,7 @@ I needed something advanced, secure, stable, portable and light, preferably a si
 
 ## Announces
 Update is here, enjoy.
+The [`slave`](https://github.com/SirSAC/DisPro/tree/slave) branch is for prototype things.
 
 ## Installation
 No installation required.
@@ -50,7 +51,7 @@ Tunnel mode doesn't require admin or root privilege.
 Ignore the `-option` for [Darwin](https://en.wikipedia.org/wiki/MacOS), it will do nothing.
 
 ## Warning
-The `-option` will change the operating system settings and some of these can be permanent but can be reset them to the default values.
+The `-option` will change the operating system settings and some of these can be permanent but can be reset them to the default values manually if you know them.
 ### For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) the settings will be these.
 <https://github.com/SirSAC/DisPro/blob/master/windows.go#L62-L79>
 ### For [Linux](https://en.wikipedia.org/wiki/Linux) the settings will be these.
