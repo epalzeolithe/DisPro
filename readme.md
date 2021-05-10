@@ -1,21 +1,21 @@
 # DisPro
-A [SOCKS5](https://en.wikipedia.org/wiki/SOCKS) load balancing proxy to combine multiple internet connections into one.
-It can also be used as a transparent proxy to load balance multiple [SSH](https://en.wikipedia.org/wiki/SSH_(Secure_Shell)) tunnels.
-Written in pure [Go](https://en.wikipedia.org/wiki/Go_(programming_language)) with no additional dependencies.
+A [SOCKS5](https://en.wikipedia.org/wiki/SOCKS) load balancing proxy to combine multiple internet connections into one. <br>
+It can also be used as a transparent proxy to load balance multiple [SSH](https://en.wikipedia.org/wiki/SSH_(Secure_Shell)) tunnels. <br>
+Written in pure [Go](https://en.wikipedia.org/wiki/Go_(programming_language)) with no additional dependencies. <br>
 Works on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows), [Darwin](https://en.wikipedia.org/wiki/MacOS) and [Linux](https://en.wikipedia.org/wiki/Linux).
 
 ## Rationale
-The idea for this project came from [go-dispatch-proxy](https://github.com/extremecoders-re/go-dispatch-proxy) which is written in [Go](https://en.wikipedia.org/wiki/Go_(programming_language)).
+The idea for this project came from [go-dispatch-proxy](https://github.com/extremecoders-re/go-dispatch-proxy) which is written in [Go](https://en.wikipedia.org/wiki/Go_(programming_language)). <br>
 I needed something advanced, secure, stable, portable and light, preferably a single binary that is independent by location without polluting the entire drive and without security or stability issues.
 
 ## Announces
-Update is here, enjoy.
+Update is here, enjoy. <br>
 The [`slave`](https://github.com/SirSAC/DisPro/tree/slave) branch is for prototype things.
 
 ## Installation
-No installation required.
-Just grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases/latest) and rename it `DisPro.bin` then start speeding up your internet connection.
-For `-option` on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) will require the [Privoxy](https://en.wikipedia.org/wiki/Privoxy) software and this can be downloaded from [release](https://sourceforge.net/projects/ijbswa/files/Win32/3.0.32%20%28stable%29) and make sure it is listening on [IP](https://en.wikipedia.org/wiki/IP_address) `::1` and port `8118`.
+No installation required. <br>
+Just grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases/latest) and rename it `DisPro.bin` then start speeding up your internet connection. <br>
+For `-option` on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) will require the [Privoxy](https://en.wikipedia.org/wiki/Privoxy) software and this can be downloaded from [release](https://sourceforge.net/projects/ijbswa/files/Win32/3.0.32%20%28stable%29) and make sure it is listening on [IP](https://en.wikipedia.org/wiki/IP_address) `::1` and port `8118`. <br>
 If you want to use [`cmd.exe`](https://en.wikipedia.org/wiki/Cmd.exe) on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) this will require the [`powershell.exe`](https://en.wikipedia.org/wiki/PowerShell) to be already installed for fixing text colors but the program can work without it if you don't want text colors anymore.
 
 ## Informations
