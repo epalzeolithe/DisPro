@@ -9,7 +9,7 @@ The idea for this project came from [go-dispatch-proxy](https://github.com/extre
 I needed something advanced, secure, stable, portable and light, preferably a single binary that is independent by location without polluting the entire drive and without security or stability issues.
 
 ## Announces
-Update is here, enjoy. <br>
+Update will be come soon for improving overall program performance. <br>
 The [`slave`](https://github.com/SirSAC/DisPro/tree/slave) branch is for prototype things.
 
 ## Installation
