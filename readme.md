@@ -14,7 +14,7 @@ The [`slave`](https://github.com/SirSAC/DisPro/tree/slave) branch is for prototy
 
 ## Installation
 No installation required. <br>
-Just grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases/latest) and rename it `DisPro.bin` then start speeding up your internet connection. <br>
+Just grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases/latest) and rename it `DisPro.exe` or `DisPro.bin` if you are not on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) then start speeding up your internet connection. <br>
 For `-option` on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) will require the [Privoxy](https://en.wikipedia.org/wiki/Privoxy) software and this can be downloaded from [release](https://sourceforge.net/projects/ijbswa/files/Win32/3.0.32%20%28stable%29) and make sure it is listening on [IP](https://en.wikipedia.org/wiki/IP_address) `::1` and port `8118`. <br>
 If you want to use [`cmd.exe`](https://en.wikipedia.org/wiki/Cmd.exe) on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) this will require the [`powershell.exe`](https://en.wikipedia.org/wiki/PowerShell) to be already installed for fixing text colors but the program can work without it if you don't want text colors anymore.
 
@@ -28,7 +28,7 @@ The option `-try` is removed on new updates because now is automatic and is esse
 ### For to bypass the [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) and [Linux](https://en.wikipedia.org/wiki/Linux) conflicts, the following commands will be automaticaly executed.
 On [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) will be.
 ```
-cmd.exe /c wmic.exe process where 'name='DisPro.bin'' call setpriority realtime
+cmd.exe /c wmic.exe process where 'name='DisPro.exe'' call setpriority realtime
 cmd.exe /c net.exe stop /y RemoteAccess
 cmd.exe /c netsh.exe interface ipv6 set interface interface=1 metric=1 store=active
 cmd.exe /c netsh.exe interface ipv6 set subinterface interface=1 mtu=(Adaptive MTU) store=active
@@ -68,17 +68,15 @@ For [Darwin](https://en.wikipedia.org/wiki/MacOS) and [Linux](https://en.wikiped
 ```
 ### For to show all commands, type this.
 ```
-DisPro.bin -help
+DisPro.(exe/bin) -help
 ```
 Will show this.
 ```
-Usage of C:\Users\SirSAC\Downloads\DisPro.bin:
-	-delay
-		Use delay mode (acts a combining a number of small outgoing messages and sending them all at once)
+Usage of C:\Users\SirSAC\Downloads\DisPro.(exe/bin):
 	-host string
 		The IP address to listen for SOCKS connection (default "::1")
 	-keep
-		Use keep mode (sets whether the operating system should send keep-alive messages on the connection)
+		Use keep mode (sets whether the program should keep the connection alive even if it is done)
 	-list
 		Shows the available addresses for dispatching (non-tunneling mode only)
 	-multiply int
@@ -99,7 +97,7 @@ PS C:\Users\SirSAC\Downloads>
 ```
 ### For to show all networks, type this.
 ```
-DisPro.bin -list
+DisPro.(exe/bin) -list
 ```
 Will show like this.
 ```
@@ -112,11 +110,11 @@ PS C:\Users\SirSAC\Downloads>
 ```
 The example 1.
 ```
-DisPro.bin -host ::1 -port 1080 -multiply 2 -pipe 8192 -option -secure -delay -keep -serial 192.168.1.2 192.168.43.4@1
+DisPro.(exe/bin) -host ::1 -port 1080 -multiply 2 -pipe 8192 -option -secure -delay -keep -serial 192.168.1.2 192.168.43.4@1
 ```
 The example 2.
 ```
-DisPro.bin -host 127.0.0.1 -port 8080 -multiply 1 -pipe 4096 -tunnel -option -delay -keep -serial 127.0.0.1:443 127.0.0.1:80@2
+DisPro.(exe/bin) -host 127.0.0.1 -port 8080 -multiply 1 -pipe 4096 -tunnel -option -delay -keep -serial 127.0.0.1:443 127.0.0.1:80@2
 ```
 
 ## Credits
