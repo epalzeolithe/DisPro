@@ -29,7 +29,6 @@ type struct_balancer struct {
 var (
 	lb_list []struct_balancer
 	lb_index int = 0
-	timeout_verify time.Duration
 	network_dialer Dialer
 	buffer_byte bytes.Buffer
 	sync_group *WaitGroup
