@@ -47,7 +47,7 @@ sh -c setcap cap_net_admin,cap_net_raw=eip ./DisPro.bin
 sh -c ifconfig -a lo add 127.0.0.1 netmask 255.255.255.255 mtu (Adaptive MTU) arp allmulti multicast dynamic up
 sh -c sysctl --write net.ipv4.conf.all.rp_filter=0
 ```
-Tunnel mode doesn't require admin or root privilege.
+Tunnel mode doesn't require admin or root privilege. <br>
 Ignore the `-option` for [Darwin](https://en.wikipedia.org/wiki/MacOS), it will do nothing.
 ### For the `launcher.cmd` to work, the following commands will be automaticaly executed.
 On [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) will be.
@@ -76,23 +76,21 @@ netsh.exe interface ipv4 set subinterface interface=%index_four% mtu=1500 store=
 The rest of code is not important to be listed here.
 
 ## Warning
-The `-option` will change the operating system settings and some of these can be permanent but can be reset them to the default values manually if you know them.
+The `-option` and `launcher.cmd` will change the operating system settings and some of these can be permanent but can be reset them to the default values manually if you know them.
 ### For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) the settings will be these.
-<https://github.com/SirSAC/DisPro/blob/master/windows.go#L62-L79>
+<https://github.com/SirSAC/DisPro/blob/master/windows.go#L62-L79> <br>
+<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L24-L25> <br>
+<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L28-L29> <br>
+<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L33-L34> <br>
+<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L37-L38> <br>
+<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L42-L43> <br>
+<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L46-L47> <br>
+<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L51-L52> <br>
+<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L55-L56>
 ### For [Linux](https://en.wikipedia.org/wiki/Linux) the settings will be these.
 <https://github.com/SirSAC/DisPro/blob/master/linux.go#L83>
 ### For noobs please do not use the `-option` command.
-<https://github.com/SirSAC/DisPro/blob/master/readme.md#L19>
-The `launcher.cmd` will change the operating system settings and some of these can be permanent but can be reset them to the default values manually if you know them.
-### For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) the settings will be these.
-<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L24-L25>
-<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L28-L29>
-<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L33-L34>
-<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L37-L38>
-<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L42-L43>
-<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L46-L47>
-<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L51-L52>
-<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L55-L56>
+<https://github.com/SirSAC/DisPro/blob/master/readme.md#L17>
 
 ## Usage
 For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) use in front of binary name.
@@ -153,6 +151,7 @@ The example 2.
 ```
 DisPro.(exe/bin) -host 127.0.0.1 -port 8080 -multiply 1 -pipe 4096 -tunnel -option -delay -keep -serial 127.0.0.1:443 127.0.0.1:80@2
 ```
+Please do not use the examples, is just informative.
 
 ## Credits
 - [go-dispatch-proxy](https://github.com/extremecoders-re/go-dispatch-proxy): A [SOCKS5](https://en.wikipedia.org/wiki/SOCKS) load balancing proxy to combine multiple internet connections into one.
