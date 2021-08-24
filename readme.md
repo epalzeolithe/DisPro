@@ -6,10 +6,11 @@ Works on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows), [Darwin](ht
 
 ## Rationale
 The idea for this project came from [go-dispatch-proxy](https://github.com/extremecoders-re/go-dispatch-proxy) which is written in [Go](https://en.wikipedia.org/wiki/Go_(programming_language)). <br>
-I needed something advanced, secure, stable, portable and light, preferably a single binary that is independent by location without polluting the entire drive and without security or stability issues.
+I needed something advanced, secure, fast, stable, portable and light, preferably a single binary that is independent by location without polluting the entire drive and without security or stability issues.
 
 ## Announces
 Update will be come soon for improving overall program performance. <br>
+This program will be have a launcher for insane speed and workaround of any bugs on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows). <br>
 The [`slave`](https://github.com/SirSAC/DisPro/tree/slave) branch is for prototype things.
 
 ## Installation
@@ -56,6 +57,8 @@ The `-option` will change the operating system settings and some of these can be
 <https://github.com/SirSAC/DisPro/blob/master/windows.go#L62-L79>
 ### For [Linux](https://en.wikipedia.org/wiki/Linux) the settings will be these.
 <https://github.com/SirSAC/DisPro/blob/master/linux.go#L83>
+### For noobs please do not use the `-option` command.
+<https://github.com/SirSAC/DisPro/blob/master/readme.md#L19>
 
 ## Usage
 For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) use in front of binary name.
