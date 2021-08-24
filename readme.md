@@ -11,7 +11,7 @@ The idea for this project came from [go-dispatch-proxy](https://github.com/extre
 I needed something advanced, secure, fast, stable, portable and light, preferably a single binary that is independent by location without polluting the entire drive and without security or stability issues.
 
 ## Announces
-Update will be come soon for improving overall program performance.
+Up to date.
 
 ## Installation
 No installation required. <br>
@@ -80,19 +80,12 @@ The rest of code is not important to be listed here.
 ## Warning
 The `-option` and `launcher.cmd` will change the operating system settings and some of these can be permanent but can be reset them to the default values manually if you know them.
 ### For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) the settings will be these.
-<https://github.com/SirSAC/DisPro/blob/master/windows.go#L62-L79> <br>
-<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L24-L25> <br>
-<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L28-L29> <br>
-<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L33-L34> <br>
-<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L37-L38> <br>
-<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L42-L43> <br>
-<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L46-L47> <br>
-<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L51-L52> <br>
-<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L55-L56>
+<https://github.com/SirSAC/DisPro/blob/master/windows.go#L63-L80> <br>
+Changing the [DNS](https://en.wikipedia.org/wiki/Domain_Name_System) servers from the `launcher.cmd` will modify the system settings for each selected internet adapters.
 ### For [Linux](https://en.wikipedia.org/wiki/Linux) the settings will be these.
 <https://github.com/SirSAC/DisPro/blob/master/linux.go#L83>
 ### For noobs please do not use the `-option` command.
-<https://github.com/SirSAC/DisPro/blob/master/readme.md#L17>
+<https://github.com/SirSAC/DisPro/blob/master/readme.md#L19>
 
 ## Usage
 For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) use in front of binary name.
