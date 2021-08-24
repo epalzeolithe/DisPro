@@ -30,11 +30,11 @@ On [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) will be.
 ```
 cmd.exe /c wmic.exe process where 'name='DisPro.exe'' call setpriority realtime
 cmd.exe /c net.exe stop /y RemoteAccess
-cmd.exe /c netsh.exe interface ipv6 set interface interface=1 metric=1 store=active
+cmd.exe /c netsh.exe interface ipv6 set interface 1 forwarding=enabled advertise=disabled metric=1 ignoredefaultroutes=disabled advertisedefaultroute=disabled store=active ecncapability=application
 cmd.exe /c netsh.exe interface ipv6 set subinterface interface=1 mtu=(Adaptive MTU) store=active
 cmd.exe /c netsh.exe interface ipv6 set address interface=1 type=anycast store=active
 cmd.exe /c netsh.exe interface ipv6 set address interface=1 address=::1 type=unicast validlifetime=infinite preferredlifetime=infinite store=active
-cmd.exe /c netsh.exe interface ipv4 set interface interface=1 metric=1 store=active
+cmd.exe /c netsh.exe interface ipv4 set interface 1 forwarding=enabled advertise=disabled metric=1 ignoredefaultroutes=disabled advertisedefaultroute=disabled store=active ecncapability=application
 cmd.exe /c netsh.exe interface ipv4 set subinterface interface=1 mtu=(Adaptive MTU) store=active
 cmd.exe /c netsh.exe interface ipv4 set address name=1 source=dhcp type=anycast store=active
 cmd.exe /c netsh.exe interface ipv4 set address name=1 source=static address=127.0.0.1 mask=255.255.255.255 gwmetric=1 type=unicast store=active
