@@ -9,15 +9,14 @@ The idea for this project came from [go-dispatch-proxy](https://github.com/extre
 I needed something advanced, secure, fast, stable, portable and light, preferably a single binary that is independent by location without polluting the entire drive and without security or stability issues.
 
 ## Announces
-Update will be come soon for improving overall program performance. <br>
-This program will be have a launcher for insane speed and workaround of any bugs on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows). <br>
-The [`slave`](https://github.com/SirSAC/DisPro/tree/slave) branch is for prototype things.
+Update will be come soon for improving overall program performance.
 
 ## Installation
 No installation required. <br>
 Just grab the latest binary for your platform from the [releases](https://github.com/SirSAC/DisPro/releases/latest) and rename it `DisPro.exe` or `DisPro.bin` if you are not on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) then start speeding up your internet connection. <br>
 For `-option` on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) will require the [Privoxy](https://en.wikipedia.org/wiki/Privoxy) software and this can be downloaded from [release](https://sourceforge.net/projects/ijbswa/files/Win32/3.0.32%20%28stable%29) and make sure it is listening on [IP](https://en.wikipedia.org/wiki/IP_address) `::1` and port `8118`. <br>
-If you want to use [`cmd.exe`](https://en.wikipedia.org/wiki/Cmd.exe) on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) this will require the [`powershell.exe`](https://en.wikipedia.org/wiki/PowerShell) to be already installed for fixing text colors but the program can work without it if you don't want text colors anymore.
+If you want to use [`cmd.exe`](https://en.wikipedia.org/wiki/Cmd.exe) on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) this will require the [`powershell.exe`](https://en.wikipedia.org/wiki/PowerShell) to be already installed for fixing text colors but the program can work without it if you don't want text colors anymore. <br>
+This program can be used with `launcher.cmd` for insane speed and workaround of any bugs on [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows).
 
 ## Informations
 DisPro now supports [Linux](https://en.wikipedia.org/wiki/Linux) in both modes, normal and tunnel. <br>
@@ -50,6 +49,31 @@ sh -c sysctl --write net.ipv4.conf.all.rp_filter=0
 ```
 Tunnel mode doesn't require admin or root privilege.
 Ignore the `-option` for [Darwin](https://en.wikipedia.org/wiki/MacOS), it will do nothing.
+### For the `launcher.cmd` to work, the following commands will be automaticaly executed.
+On [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) will be.
+```
+:: One.
+netsh.exe interface ipv6 set interface %index_one% forwarding=disabled advertise=disabled metric=2 ignoredefaultroutes=disabled advertisedefaultroute=disabled store=active ecncapability=application
+netsh.exe interface ipv6 set subinterface interface=%index_one% mtu=1500 store=active
+netsh.exe interface ipv4 set interface %index_one% forwarding=disabled advertise=disabled metric=2 ignoredefaultroutes=disabled advertisedefaultroute=disabled store=active ecncapability=application
+netsh.exe interface ipv4 set subinterface interface=%index_one% mtu=1500 store=active
+:: Two.
+netsh.exe interface ipv6 set interface %index_two% forwarding=disabled advertise=disabled metric=2 ignoredefaultroutes=disabled advertisedefaultroute=disabled store=active ecncapability=application
+netsh.exe interface ipv6 set subinterface interface=%index_two% mtu=1500 store=active
+netsh.exe interface ipv4 set interface %index_two% forwarding=disabled advertise=disabled metric=2 ignoredefaultroutes=disabled advertisedefaultroute=disabled store=active ecncapability=application
+netsh.exe interface ipv4 set subinterface interface=%index_two% mtu=1500 store=active
+:: Three.
+netsh.exe interface ipv6 set interface %index_three% forwarding=disabled advertise=disabled metric=2 ignoredefaultroutes=disabled advertisedefaultroute=disabled store=active ecncapability=application
+netsh.exe interface ipv6 set subinterface interface=%index_three% mtu=1500 store=active
+netsh.exe interface ipv4 set interface %index_three% forwarding=disabled advertise=disabled metric=2 ignoredefaultroutes=disabled advertisedefaultroute=disabled store=active ecncapability=application
+netsh.exe interface ipv4 set subinterface interface=%index_three% mtu=1500 store=active
+:: Four.
+netsh.exe interface ipv6 set interface %index_four% forwarding=disabled advertise=disabled metric=2 ignoredefaultroutes=disabled advertisedefaultroute=disabled store=active ecncapability=application
+netsh.exe interface ipv6 set subinterface interface=%index_four% mtu=1500 store=active
+netsh.exe interface ipv4 set interface %index_four% forwarding=disabled advertise=disabled metric=2 ignoredefaultroutes=disabled advertisedefaultroute=disabled store=active ecncapability=application
+netsh.exe interface ipv4 set subinterface interface=%index_four% mtu=1500 store=active
+```
+The rest of code is not important to be listed here.
 
 ## Warning
 The `-option` will change the operating system settings and some of these can be permanent but can be reset them to the default values manually if you know them.
@@ -59,6 +83,16 @@ The `-option` will change the operating system settings and some of these can be
 <https://github.com/SirSAC/DisPro/blob/master/linux.go#L83>
 ### For noobs please do not use the `-option` command.
 <https://github.com/SirSAC/DisPro/blob/master/readme.md#L19>
+The `launcher.cmd` will change the operating system settings and some of these can be permanent but can be reset them to the default values manually if you know them.
+### For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) the settings will be these.
+<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L24-L25>
+<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L28-L29>
+<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L33-L34>
+<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L37-L38>
+<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L42-L43>
+<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L46-L47>
+<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L51-L52>
+<https://github.com/SirSAC/DisPro/blob/master/launcher.cmd#L55-L56>
 
 ## Usage
 For [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) use in front of binary name.
