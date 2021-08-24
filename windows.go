@@ -51,11 +51,11 @@ func handle_internet(local_connection Conn, target_address string, processor_thr
 func execute_command(mtu_size string, option_setting bool) {
 	exec.Command("cmd.exe", "/c", "wmic.exe process where 'name='DisPro.exe'' call setpriority realtime").Run()
 	exec.Command("cmd.exe", "/c", "net.exe stop /y RemoteAccess").Run()
-	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv6 set interface interface=1 metric=1 store=active").Run()
+	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv6 set interface 1 forwarding=enabled advertise=disabled metric=1 ignoredefaultroutes=disabled advertisedefaultroute=disabled store=active ecncapability=application").Run()
 	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv6 set subinterface interface=1 mtu=", mtu_size, "store=active").Run()
 	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv6 set address interface=1 type=anycast store=active").Run()
 	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv6 set address interface=1 address=::1 type=unicast validlifetime=infinite preferredlifetime=infinite store=active").Run()
-	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv4 set interface interface=1 metric=1 store=active").Run()
+	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv4 set interface 1 forwarding=enabled advertise=disabled metric=1 ignoredefaultroutes=disabled advertisedefaultroute=disabled store=active ecncapability=application").Run()
 	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv4 set subinterface interface=1 mtu=", mtu_size, "store=active").Run()
 	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv4 set address name=1 source=dhcp type=anycast store=active").Run()
 	exec.Command("cmd.exe", "/c", "netsh.exe interface ipv4 set address name=1 source=static address=127.0.0.1 mask=255.255.255.255 gwmetric=1 type=unicast store=active").Run()
